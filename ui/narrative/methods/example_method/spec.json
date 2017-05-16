@@ -1,0 +1,61 @@
+{
+    "ver": "0.0.1",
+    "authors": [
+        "mikaelacashman"
+    ],
+    "contact": "",
+    "categories": ["active"],
+    "widgets": {
+        "input": null,
+        "output": null
+    },
+    "parameters": [ 
+        {
+            "id": "phenotype_ref",
+            "optional": false,
+            "advanced": false,
+            "allow_multiple": false,
+            "default_values": [ "" ],
+            "field_type": "text",
+            "text_options": {
+                "valid_ws_types": [ "KBasePhenotypes.PhenotypeSet-3.0" ]
+            }
+        }
+    ],
+    "behavior": {
+        "service-mapping": {
+            "url": "",
+            "name": "Weka",
+            "method": "DecisionTree",
+            "input_mapping": [
+                {
+                    "narrative_system_variable": "workspace",
+                    "target_argument_position": 0
+                },
+                {
+                    "input_parameter": "phenotype_ref",
+                    "target_property": "phenotype_ref"
+                }
+            ],
+            "output_mapping": [
+                {
+                    "service_method_output_path": [0],
+                    "target_property": "output"
+                },
+                {
+		    "service_method_output_path": [0,"report_name"],
+		    "target_property": "report_name"
+                },
+		{
+		    "service_method_output_path": [0,"report_ref"],
+		    "target_property": "report_ref"
+		},
+                {
+                    "narrative_system_variable": "workspace",
+                    "target_property": "workspaceName"
+                }
+            ]
+        }
+    },
+    "job_id_output_field": "docker"
+}

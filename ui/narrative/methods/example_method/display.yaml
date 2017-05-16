@@ -1,0 +1,42 @@
+#
+# define display information
+#
+name: Decision Tree
+
+tooltip: |
+    Runs weka J48 classification tree algorithm on a phenotype.  Results currently output to Report.
+
+screenshots: []
+
+icon: icon.png
+
+#
+# define a set of similar methods that might be useful to the user
+#
+suggestions:
+    apps:
+        related:
+            [app1, app2]
+        next:
+            [app3, app4]
+    methods:
+        related:
+            [method1, method2]
+        next:
+            [method3, method4]
+
+#
+# Configure the display and description of parameters
+#
+parameters :
+    phenotype_ref :
+        ui-name : |
+            Phenotype
+        short-hint : |
+            Phenotype with growth values
+        long-hint  : |
+            Phenotype with growth values
+
+description : |
+    <p>App runs Weka J48 decision tree classifier on a phenotype.  Attributes are the media conditions and the classes are Growth Values.</p>
+
