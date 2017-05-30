@@ -34,7 +34,8 @@
                 },
                 {
                     "input_parameter": "phenotype_ref",
-                    "target_property": "phenotype_ref"
+                    "target_property": "phenotype_ref",
+		    "target_type_transform": "ref"
                 }
             ],
             "output_mapping": [
