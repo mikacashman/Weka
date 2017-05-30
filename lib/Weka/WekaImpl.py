@@ -53,13 +53,14 @@ class Weka:
         #runs J48 Deicison trees in weka on phenotype set
  
         ### STEP 1 - Parse input and catch any errors
-        if 'workspace_name' not in params:
+        print("Getting Data")
+	if 'workspace_name' not in params:
                 raise ValueError('Parameter workspace is not set in input arguments')
         workspace_name = params['workspace_name']
         if 'phenotype_ref' not in params:
         	raise ValueError('Parameter phenotype is not set in input arguments')
         phenotype = params['phenotype_ref']
- 
+	print(phenotype) 
         #STEP 2 - Get the input data
         token = ctx['token']
         wsClient = workspaceService(self.workspaceURL, token=token)
@@ -144,7 +145,7 @@ class Weka:
 	os.system("java weka.classifiers.trees.J48 -t " + wekafile + " -T " + wekafile + " -i > " + outfilename) 
 
         ### STEP 6 - Print tree result to report
-        report = outfilename      
+        report = open(outfilename)      
 	returnVal = {
 		'report_name':'DT_report',
 		'report_ref': report}

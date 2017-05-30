@@ -102,7 +102,7 @@ class WekaTest(unittest.TestCase):
 	#self.getWsClient().save_objects({'workspace': self.getWsName(),'objects': [{'type': 'KBasePhenotypes.PhenotypeSet-3.0','name': file_name,'data': object_data}]})
 	
 	#hardcoded
-	ret = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1496165061369','phenotype_ref':'mikaelacashman:narrative_1496165061369/BTJmmol.pheno'})
+	ret = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1496165061369','phenotype_ref':'4965/7/1'})
 	
 	#test narrative
 	#ret = self.getImpl().DecisionTree(self.getContext(), {"phenotype_ref": self.getWsName() + "/" + file_path})[0]
