@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 #BEGIN_HEADER
+import os
 import sys
 import traceback
 from pprint import pprint, pformat
@@ -72,15 +73,78 @@ class Weka:
         print('Got Phenotype')
  
         ### STEP 3 - Create Matrix
- 
-        ### STEP 4 - Print matrix to file
- 
-        ### STEP 5 - Create ARFF file
- 
-        ### STEP 6 - Send to WEKA
- 
-        ### STEP 7 - Print tree result to report
-        report = "Success"      
+	#currently assumed the base media is the same for all phenotypes,
+	#this should be updated later to allow more flexibility.
+	phenos = []
+	compounds = []
+	growth = []
+ 	
+ 	for i in range(0,len(pheno['phenotypes'])):
+		temp = []
+		#zero out list first (no compounds present)
+		for j in range(0,len(compounds)):
+			temp.append(0)
+		for j in range(0,len(pheno['phenotypes'][i]['additionalcompound_refs'])):
+			if pheno['phenotypes'][i]['additionalcompound_refs'][j] in compounds:
+				#find it in the list and make it a 1
+				temp[compounds.index(pheno['phenotypes'][i]['additionalcompound_refs'][j])]=1
+			else:
+				#add 0 to all exisiting phenos and add 1 to this one
+				compounds.append(pheno['phenotypes'][i]['additionalcompound_refs'][j])
+				for k in range(0,len(phenos)):
+					phenos[k].append(0)
+				temp.append(1)
+		phenos.append(temp)
+		growth.append(pheno['phenotypes'][i]['normalizedGrowth'])
+	print(compounds)
+	#print(phenos)
+	print(growth)
+
+        ### STEP temp - Print matrix to file
+ 	matfilename = self.scratch + "/matrix.txt"
+	matrixfile = open(matfilename,"w+")
+	for i in range(0,len(compounds)):
+		matrixfile.write(compounds[i] + " ")
+	matrixfile.write("\n")	
+	for i in range(0,len(phenos)):
+		for j in range(0,len(phenos[i])):
+			matrixfile.write(str(phenos[i][j]))
+		matrixfile.write(" --> " + str(growth[i]))
+		matrixfile.write("\n")
+	matrixfile.close()	
+
+        ### STEP 4 - Create ARFF file
+ 	wekafile = self.scratch + "/weka.arff"
+	arff = open(wekafile,"w+")
+	arff.write("@RELATION J48DT_Phenotype\n\n")
+	for i in range(0,len(compounds)):
+		arff.write("@ATTRIBUTE " + compounds[i] + " {ON,OFF}\n")
+	arff.write("@ATTRIBUTE class {GROWTH,NO_GROWTH}")
+	arff.write("\n@data\n")
+	for i in range(0,len(phenos)):
+		for j in range(0,len(phenos[i])):
+			if phenos[i][j] == 1:
+				arff.write("ON,")
+			elif phenos[i][j] == 0:
+				arff.write("OFF,")
+			else:
+				raise ValueError('Error: Invalid compound in phenos associated with phenotype.  Must be a 1 (for ON) or 0 (for OFF).  Please report bug.')
+		
+		if growth[i] == 0:
+			arff.write("GROWTH" + '\n')
+		elif growth[i] == 1:
+			arff.write("NO_GROWTH" + '\n')
+		else:
+			raise ValueError('Error: Invalid growth class associated with phenotype.  Must be a 1 (for growth) or 0 (for no_growth).  Please check your phenotype data set.')
+	arff.close()
+		
+        ### STEP 5 - Send to WEKA
+	#Call weka with a different protocol?  os.system not recomeneded - what is?
+	outfilename = self.scratch + "/weka.out"
+	os.system("java weka.classifiers.trees.J48 -t " + wekafile + " -T " + wekafile + " -i > " + outfilename) 
+
+        ### STEP 6 - Print tree result to report
+        report = outfilename      
 	returnVal = {
 		'report_name':'DT_report',
 		'report_ref': report}

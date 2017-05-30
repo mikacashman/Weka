@@ -88,8 +88,26 @@ class WekaTest(unittest.TestCase):
         # self.assertEqual(ret[...], ...) or other unittest methods
 
         print("starting test...")
-	self.getWSClient().save_objects({'workspace': self.getWsName(),'objects': []})
-	#ret = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:1439229826535','phenotype_ref':'mikaelacashman:1439229826535/BT_Iron_Pheno'})
-	ret = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1494951001828','phenotype_ref':'mikaelacashman:narrative_1494951001828/Jmmol.pheno'})
-	print("Running asserts...")
-	self.assertEqual(ret[0]['report_ref'],'Success')
+	test_dir = os.path.dirname(os.path.realpath(__file__))
+	#pheno_path = test_dir + "/data/Jmmol.pheno.json"
+	#genome_path = test_dir + "/data/BThetaGenome.json"
+	#with open(genome_path) as f:
+	#	object_data = json.load(f)
+	#file_name = "TestGeno"
+	#self.getWsClient().save_objects({'workspace': self.getWsName(),'objects': [{'type': 'KBaseGenomes.Genome-7.0','name': file_name,'data': object_data}]})
+	
+	#with open(pheno_path) as f:
+	#	object_data = json.load(f)
+	#file_name = "TestPheno"
+	#self.getWsClient().save_objects({'workspace': self.getWsName(),'objects': [{'type': 'KBasePhenotypes.PhenotypeSet-3.0','name': file_name,'data': object_data}]})
+	
+	#hardcoded
+	ret = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1496165061369','phenotype_ref':'mikaelacashman:narrative_1496165061369/BTJmmol.pheno'})
+	
+	#test narrative
+	#ret = self.getImpl().DecisionTree(self.getContext(), {"phenotype_ref": self.getWsName() + "/" + file_path})[0]
+		
+	print("Running zero asserts...")
+	#expected_output_file = test_dir + "/data/weka.out"
+	#expected_output = open(expected_output_file)
+	#self.assertEqual(ret[0]['report_ref'],expected_output)
