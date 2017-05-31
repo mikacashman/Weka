@@ -155,6 +155,49 @@ class Weka:
 	report = outfile.read()
 	print("File read")     
 	print(type(report)) 
+	
+        reportObj = { 
+                'objects_created':[],
+                'text_message':report
+        }   
+        #save report
+        provenance = [{}]
+        if 'provenance' in ctx:
+                provenance = ctx['provenance']
+        # add additional info to provenance here, in this case the input data object reference
+        provenance[0]['input_ws_objects']=[workspace_name+'/'+pheno['id']]
+        report_info_list = None
+        try:
+                report_info_list = wsClient.save_objects({
+                        'workspace':workspace_name,
+                        'objects':[
+                        {   
+                                'type':'KBaseReport.Report',
+                                'data':reportObj,
+                                'name':'FS_report',
+                                'meta':{},
+                                'hidden':1, # important!  make sure the report is hidden
+                                'provenance':provenance
+                        }   
+                        ]   
+                })  
+        except:
+                exc_type, exc_value, exc_traceback = sys.exc_info()
+                lines = traceback.format_exception(exc_type, exc_value, exc_traceback)
+                orig_error = ''.join('    ' + line for line in lines)
+                raise ValueError('Error saving Report object to workspace:\n' + orig_error)
+        report_info = report_info_list[0]
+        print('saved report: ' + pformat(report_info))
+        print(report)
+
+
+        print('Ready to return')
+        returnVal = { 
+                'report_name':'DT_report',
+                'report_ref': str(report_info[6]) + '/' + str(report_info[0]) + '/' + str(report_info[4])
+        }   
+
+	#Angry Face
 	#returnVal = {
 	#	'report_name':'DT_report',
 	#	'report_ref': str(report)}
