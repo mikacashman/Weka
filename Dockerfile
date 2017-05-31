@@ -12,6 +12,7 @@ MAINTAINER KBase Developer
 # https library that is out of date in the base image.
 
 RUN pip install coverage
+#install Weka tools to run classification
 RUN apt-get -y install weka
 env CLASSPATH /usr/share/java/weka.jar:CLASSPATH
 
