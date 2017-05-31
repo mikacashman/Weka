@@ -143,19 +143,65 @@ class Weka:
 	#Call weka with a different protocol?  os.system not recomeneded - what is?
 	outfilename = self.scratch + "/weka.out"
 	os.system("java weka.classifiers.trees.J48 -t " + wekafile + " -T " + wekafile + " -i > " + outfilename) 
+	print("Weka completed")
 
         ### STEP 6 - Print tree result to report
-        report = open(outfilename)      
-	returnVal = {
-		'report_name':'DT_report',
-		'report_ref': report}
+	print(type(outfilename))
+        outfile = open(outfilename,'r')
+	print("File opened")
+	print(type(outfile))
+	report = outfile.read()
+	print("File read")     
+	print(type(report)) 
+	#returnVal = {
+	#	'report_name':'DT_report',
+	#	'report_ref': str(report)}
         #END DecisionTree
+	print("-----Report------")
+	print(report)
+	reportObj = {
+		'objects_created':[],
+		'text_message':report
+	}
 
-        # At some point might do deeper type checking...
-        if not isinstance(returnVal, dict):
-            raise ValueError('Method DecisionTree return value ' +
-                             'returnVal is not type dict as required.')
-        # return the results
+
+	### STEP 6 - Save Report
+        provenance = [{}]
+        if 'provenance' in ctx:
+                provenance = ctx['provenance']
+        # add additional info to provenance here, in this case the input data object reference
+        provenance[0]['input_ws_objects']=[workspace_name+'/'+pheno['id']]
+	print(pheno['id'])
+        report_info_list = None
+        try:
+                report_info_list = wsClient.save_objects({
+                        'workspace':workspace_name,
+                        'objects':[
+                        {   
+                                'type':'KBaseReport.Report',
+                                'data':reportObj,
+                                'name':'FS_report',
+                                'meta':{},
+                                'hidden':1, # important!  make sure the report is hidden
+                                'provenance':provenance
+                        }   
+                        ]   
+                })  
+        except:
+                exc_type, exc_value, exc_traceback = sys.exc_info()
+                lines = traceback.format_exception(exc_type, exc_value, exc_traceback)
+                orig_error = ''.join('    ' + line for line in lines)
+                raise ValueError('Error saving Report object to workspace:\n' + orig_error)
+        report_info = report_info_list[0]
+        print('saved report: ' + pformat(report_info))
+        print(report)
+
+        print('Ready to return')
+        returnVal = { 
+                'report_name':'FS_report',
+                'report_ref': str(report_info[6]) + '/' + str(report_info[0]) + '/' + str(report_info[4])
+        }
+	# return the results
         return [returnVal]
 
 
