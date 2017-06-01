@@ -34,7 +34,7 @@
 	},
 	{
 	    "id": "minNumObj",
-	    "optional": false,
+	    "optional": true,
 	    "advanced": true,
 	    "allow_multiple": false,
 	    "defualt_values": [2],
