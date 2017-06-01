@@ -4,7 +4,9 @@
 name: Decision Tree
 
 tooltip: |
-    Runs weka J48 classification tree algorithm on a phenotype.  Results currently output to Report.
+    Runs weka J48 classification tree algorithm on a phenotype set.  Results currently output to Report.
+    Currently assumes the base media is always the same, only additional compounds change.
+    Request upgrades as needed.
 
 screenshots: []
 
@@ -38,5 +40,5 @@ parameters :
             Phenotype with growth values
 
 description : |
-    <p>App runs Weka J48 decision tree classifier on a phenotype.  Attributes are the media conditions and the classes are Growth Values.</p>
+    <p>App runs Weka J48 decision tree classifier on a phenotype set.  Attributes are the media conditions and the classes are Growth Values.</p>
 

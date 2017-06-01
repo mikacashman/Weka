@@ -40,7 +40,6 @@ class Weka:
         #END_CONSTRUCTOR
         pass
 
-
     def DecisionTree(self, ctx, params):
         """
         :param params: instance of type "DTParams" (Insert your typespec
@@ -62,8 +61,8 @@ class Weka:
         if 'phenotype_ref' not in params:
         	raise ValueError('Parameter phenotype is not set in input arguments')
         phenotype = params['phenotype_ref']
-	print(phenotype) 
-        #STEP 2 - Get the input data
+        
+	#STEP 2 - Get the input data
         token = ctx['token']
         wsClient = workspaceService(self.workspaceURL, token=token)
         try:
@@ -99,24 +98,28 @@ class Weka:
 				temp.append(1)
 		phenos.append(temp)
 		growth.append(pheno['phenotypes'][i]['normalizedGrowth'])
+	print("Compounds: ")
 	print(compounds)
-	#print(phenos)
+	print("Growth values: ")
 	print(growth)
 
-        ### STEP temp - Print matrix to file
- 	matfilename = self.scratch + "/matrix.txt"
-	matrixfile = open(matfilename,"w+")
-	for i in range(0,len(compounds)):
-		matrixfile.write(compounds[i] + " ")
-	matrixfile.write("\n")	
-	for i in range(0,len(phenos)):
-		for j in range(0,len(phenos[i])):
-			matrixfile.write(str(phenos[i][j]))
-		matrixfile.write(" --> " + str(growth[i]))
-		matrixfile.write("\n")
-	matrixfile.close()	
+        ### STEP test - Print matrix to file
+	#this code is used for debugging to ensure the matrix is
+	#created properly
+ 	#matfilename = self.scratch + "/matrix.txt"
+	#matrixfile = open(matfilename,"w+")
+	#for i in range(0,len(compounds)):
+	#	matrixfile.write(compounds[i] + " ")
+	#matrixfile.write("\n")	
+	#for i in range(0,len(phenos)):
+	#	for j in range(0,len(phenos[i])):
+	#		matrixfile.write(str(phenos[i][j]))
+	#	matrixfile.write(" --> " + str(growth[i]))
+	#	matrixfile.write("\n")
+	#matrixfile.close()	
 
         ### STEP 4 - Create ARFF file
+	#creates the .arff file which is input to Weka
  	wekafile = self.scratch + "/weka.arff"
 	arff = open(wekafile,"w+")
 	arff.write("@RELATION J48DT_Phenotype\n\n")
@@ -197,10 +200,6 @@ class Weka:
                 'report_ref': str(report_info[6]) + '/' + str(report_info[0]) + '/' + str(report_info[4])
         }   
 
-	#Angry Face
-	#returnVal = {
-	#	'report_name':'DT_report',
-	#	'report_ref': str(report)}
         #END DecisionTree
 
         # At some point might do deeper type checking...
@@ -209,6 +208,7 @@ class Weka:
                              'returnVal is not type dict as required.')
         # return the results
         return [returnVal]
+
     def status(self, ctx):
         #BEGIN_STATUS
         returnVal = {'state': "OK",
