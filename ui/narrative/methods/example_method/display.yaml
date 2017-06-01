@@ -39,6 +39,53 @@ parameters :
         long-hint  : |
             Phenotype with growth values
 
+    confidenceFactor :
+        ui-name : | 
+            Confidence Factor
+        short-hint : | 
+            The confidence factor used for pruning (smaller values incur more pruning).
+        long-hint : | 
+            The confidence factor used for pruning (smaller values incur more pruning).  (See Weka specs for more).
+
+    minNumObj :
+        ui-name : | 
+            Min Num Obj
+        short-hint : | 
+            The minimum number of instances per leaf.
+        long-hint : |   
+            The minimum number of instances per leaf.  (See Weka specs for more).
+    
+    numFolds :
+        ui-name : | 
+            Num Folds
+        short-hint : | 
+            Determines the amount of data used for reduced-error pruning.  One fold is used for pruning, the rest for growing the tree.
+        long-hint : | 
+            Determines the amount of data used for reduced-error pruning.  One fold is used for pruning, the rest for growing the tree. (See Weka specs for more).
+
+    reducedErrorPruning :
+        ui-name : | 
+            Reduced Error Pruning
+        short-hint : |  
+            Whether reduced-error pruning is used instead of C.4.5 pruning.
+        long-hint : | 
+            Whether reduced-error pruning is used instead of C.4.5 pruning.  (See Weka specs for more).
+    
+    seed :
+        ui-name : | 
+            Seed
+        short-hint : | 
+            The seed used for randomizing the data when reduced-error pruning is used.
+        long-hint : | 
+            The seed used for randomizing the data when reduced-error pruning is used.  (See Weka specs for more).
+    
+    unpruned :
+        ui-name : | 
+            Unpruned
+        short-hint : | 
+            Whether pruning is performed.
+        long-hint : |
+            Whether pruning is performed.  (See Weka specs for more).
 description : |
     <p>App runs Weka J48 decision tree classifier on a phenotype set.  Attributes are the media conditions and the classes are Growth Values.</p>
 

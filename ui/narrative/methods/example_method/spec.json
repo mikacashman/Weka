@@ -20,7 +20,73 @@
             "text_options": {
                 "valid_ws_types": [ "KBasePhenotypes.PhenotypeSet" ]
             }
-        }
+        },
+   	{
+	    "id": "confidenceFactor",
+	    "optional": false,
+	    "advanced": true,
+	    "allow_multiple": false,
+	    "default_values": [0.25],
+	    "field_type": "text",
+	    "text_options": {
+		"valid_as": "float"
+	    }
+	},
+	{
+	    "id": "minNumObj",
+	    "optional": false,
+	    "advanced": true,
+	    "allow_multiple": false,
+	    "defualt_values": [2],
+	    "field_type": "text",
+	    "text_options": {
+		"valid_as": "int"
+	    }
+	},
+	{
+	    "id": "numFolds",
+	    "optional": true,
+	    "advanced": true,
+	    "allow_multiple": false,
+	    "default_values": [3],
+	    "field_type": "text",
+	    "text_options": {
+	 	"valid_as": "int"
+	    }
+	},
+	{
+	    "id": "reducedErrorPruning",
+	    "optional": true,
+	    "advanced": true,
+	    "allow_multiple": false,
+	    "default_values": [false],
+	    "field_type": "text",
+	    "text_options": {
+		"valid_as": "boolean"
+	    }
+	},
+	{
+	    "id": "seed",
+	    "optional": false,
+	    "advanced": true,
+	    "allow_multiple": false,
+	    "default_values": [1],
+	    "field_type": "text",
+	    "text_options": {
+		"valid_as": "int"
+	    }
+	},
+	{
+	    "id": "unpruned",
+	    "optional": false,
+	    "advanced": true,
+	    "allow_multiple": false,
+	    "default_values": [false],
+	    "field_type": "text",
+	    "text_options": {
+		"valid_as": "boolean"
+	    }
+	}
     ],
     "behavior": {
         "service-mapping": {

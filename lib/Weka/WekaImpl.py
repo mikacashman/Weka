@@ -147,7 +147,21 @@ class Weka:
         ### STEP 5 - Send to WEKA
 	#Call weka with a different protocol?  os.system not recomeneded - what is?
 	outfilename = self.scratch + "/weka.out"
-	os.system("java weka.classifiers.trees.J48 -t " + wekafile + " -i > " + outfilename) 
+	call = "java weka.classifiers.trees.J48 -t " + wekafile + " -i > " + outfilename 
+	if "reducedErrorPruning" in params and params['reducedErrorPruning'] is not None:
+		call+=" -R"
+		if "numFolds" in params and params['numFolds'] is not None:
+			call+=" -N " + params['numFolds']
+		if "seed" in params and params['seed'] is not None:
+			call+=" -Q " + params['seed']
+	if "unpruned" in params and params['unpruned'] is not None:
+		call+=" -U"	
+	if "confidenceFactor" in params and params['confidenceFactor'] is not None:
+		call+=" -C " + params['confidenceFactor']
+	if "minNumObj" in params and params['minNumObj'] is not None:
+		call+=" -M " + params['minNumObj']
+	print("Weka call is: " + call)
+	os.system(call)
 	print("Weka completed")
 
         ### STEP 6 - Print tree result to report

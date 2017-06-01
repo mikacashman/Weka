@@ -111,3 +111,15 @@ class WekaTest(unittest.TestCase):
 	#expected_output_file = test_dir + "/data/weka.out"
 	#expected_output = open(expected_output_file)
 	#self.assertEqual(ret[0]['report_ref'],expected_output)
+
+    def test_DTAdvancedUnPruned(self):
+	print("starting advanced test...")
+	ret = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1496165061369','phenotype_ref':'4965/10/1','unpruned':'true'})
+
+    def test_DTAdvancedReducedPrune(self):
+	print("starting advanced test...")
+	ret = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1496165061369','phenotype_ref':'4965/10/1','reducedErrorPruning':'true','numFolds':'11','seed':'142'})
+
+    def test_DTAdvancedMinObj(self):
+	print("starting advanced test...")
+	ret = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1496165061369','phenotype_ref':'4965/10/1','minNumObj':'10'})
