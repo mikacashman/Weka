@@ -147,7 +147,7 @@ class Weka:
         ### STEP 5 - Send to WEKA
 	#Call weka with a different protocol?  os.system not recomeneded - what is?
 	outfilename = self.scratch + "/weka.out"
-	os.system("java weka.classifiers.trees.J48 -t " + wekafile + " -T " + wekafile + " -i > " + outfilename) 
+	os.system("java weka.classifiers.trees.J48 -t " + wekafile + " -i > " + outfilename) 
 	print("Weka completed")
 
         ### STEP 6 - Print tree result to report
