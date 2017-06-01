@@ -73,7 +73,9 @@ class Weka:
                 orig_error = ''.join('   ' + line for line in lines)
                 raise ValueError('Error loading original Phenotype object from workspace:\n' + orig_error)
         print('Got Phenotype')
- 
+	print(params)
+	print 
+
         ### STEP 3 - Create Matrix
 	#currently assumed the base media is the same for all phenotypes,
 	#this should be updated later to allow more flexibility.
@@ -98,10 +100,10 @@ class Weka:
 				temp.append(1)
 		phenos.append(temp)
 		growth.append(pheno['phenotypes'][i]['normalizedGrowth'])
-	print("Compounds: ")
-	print(compounds)
-	print("Growth values: ")
-	print(growth)
+	#print("Compounds: ")
+	#print(compounds)
+	#print("Growth values: ")
+	#print(growth)
 
         ### STEP test - Print matrix to file
 	#this code is used for debugging to ensure the matrix is
@@ -149,12 +151,13 @@ class Weka:
 	outfilename = self.scratch + "/weka.out"
 	call = "java weka.classifiers.trees.J48 -t " + wekafile + " -i > " + outfilename 
 	if "reducedErrorPruning" in params and params['reducedErrorPruning'] is not None:
-		call+=" -R"
-		if "numFolds" in params and params['numFolds'] is not None:
-			call+=" -N " + params['numFolds']
-		if "seed" in params and params['seed'] is not None:
-			call+=" -Q " + params['seed']
-	if "unpruned" in params and params['unpruned'] is not None:
+		if params['reducedErrorPruning'] == 1:
+			call+=" -R"
+			if "numFolds" in params and params['numFolds'] is not None:
+				call+=" -N " + params['numFolds']
+			if "seed" in params and params['seed'] is not None:
+				call+=" -Q " + params['seed']
+	if "unpruned" in params and params['unpruned'] is not None and params['unpruned'] == 1:
 		call+=" -U"	
 	if "confidenceFactor" in params and params['confidenceFactor'] is not None:
 		call+=" -C " + params['confidenceFactor']
@@ -169,7 +172,8 @@ class Weka:
         outfile = open(outfilename,'r')
 	print("File opened")
 	print(type(outfile))
-	report = outfile.read()
+	report = "Weka Call: " + call
+	report+= outfile.read()
 	print("File read")     
 	print(type(report)) 
 	
@@ -204,7 +208,6 @@ class Weka:
                 orig_error = ''.join('    ' + line for line in lines)
                 raise ValueError('Error saving Report object to workspace:\n' + orig_error)
         report_info = report_info_list[0]
-        print('saved report: ' + pformat(report_info))
         print(report)
 
 

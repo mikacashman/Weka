@@ -113,13 +113,13 @@ class WekaTest(unittest.TestCase):
 	#self.assertEqual(ret[0]['report_ref'],expected_output)
 
     def test_DTAdvancedUnPruned(self):
-	print("starting advanced test...")
-	ret = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1496165061369','phenotype_ref':'4965/10/1','unpruned':'true'})
+	print("starting advanced test -U...")
+	ret = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1496165061369','phenotype_ref':'4965/10/1','unpruned':1})
 
     def test_DTAdvancedReducedPrune(self):
-	print("starting advanced test...")
-	ret = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1496165061369','phenotype_ref':'4965/10/1','reducedErrorPruning':'true','numFolds':'11','seed':'142'})
+	print("starting advanced test -R...")
+	ret = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1496165061369','phenotype_ref':'4965/10/1','reducedErrorPruning':1,'numFolds':'11','seed':'142'})
 
     def test_DTAdvancedMinObj(self):
-	print("starting advanced test...")
+	print("starting advanced test -M...")
 	ret = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1496165061369','phenotype_ref':'4965/10/1','minNumObj':'10'})

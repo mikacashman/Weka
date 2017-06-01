@@ -60,9 +60,10 @@
 	    "advanced": true,
 	    "allow_multiple": false,
 	    "default_values": [false],
-	    "field_type": "text",
-	    "text_options": {
-		"valid_as": "boolean"
+	    "field_type": "checkbox",
+	    "checkbox_options": {
+		"checked_value": "1",
+		"unchecked_value": "0"
 	    }
 	},
 	{
@@ -82,9 +83,10 @@
 	    "advanced": true,
 	    "allow_multiple": false,
 	    "default_values": [false],
-	    "field_type": "text",
-	    "text_options": {
-		"valid_as": "boolean"
+	    "field_type": "checkbox",
+	    "checkbox_options": {
+		"checked_value": "1",
+		"unchecked_value": "0"
 	    }
 	}
     ],
