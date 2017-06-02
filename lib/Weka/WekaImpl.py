@@ -151,13 +151,16 @@ class Weka:
 	outfilename = self.scratch + "/weka.out"
 	call = "java weka.classifiers.trees.J48 -t " + wekafile + " -i > " + outfilename 
 	if "reducedErrorPruning" in params and params['reducedErrorPruning'] is not None:
+		print("test1")
 		if params['reducedErrorPruning'] == 1:
+			print("test2")
 			call+=" -R"
 			if "numFolds" in params and params['numFolds'] is not None:
 				call+=" -N " + params['numFolds']
 			if "seed" in params and params['seed'] is not None:
 				call+=" -Q " + params['seed']
 	if "unpruned" in params and params['unpruned'] is not None and params['unpruned'] == 1:
+		print("test3")
 		call+=" -U"	
 	if "confidenceFactor" in params and params['confidenceFactor'] is not None:
 		call+=" -C " + params['confidenceFactor']
