@@ -25,7 +25,7 @@ class Weka:
     ######################################### noqa
     VERSION = "0.0.1"
     GIT_URL = "https://github.com/mikacashman/Weka.git"
-    GIT_COMMIT_HASH = "2a267094bcb0e40dddf1caee8d2f703c2f9bea38"
+    GIT_COMMIT_HASH = "0d9f5f08bbcc32573f6b564231f15594e14e61dd"
 
     #BEGIN_CLASS_HEADER
     workspaceURL = None
@@ -40,11 +40,17 @@ class Weka:
         #END_CONSTRUCTOR
         pass
 
+
     def DecisionTree(self, ctx, params):
         """
-        :param params: instance of type "DTParams" (Insert your typespec
-           information here.) -> structure: parameter "workspace_name" of
-           String, parameter "phenotype_ref" of String
+        :param params: instance of type "DTParams" -> structure: parameter
+           "workspace_name" of String, parameter "phenotype_ref" of String,
+           parameter "confidenceFactor" of Double, parameter "minNumObj" of
+           Long, parameter "numFolds" of Long, parameter
+           "reducedErrorPruning" of type "bool" (A binary boolean), parameter
+           "seed" of Long, parameter "unpruned" of type "bool" (A binary
+           boolean), parameter "class_values" of String, parameter
+           "class_labels" of String
         :returns: instance of type "DTOutput" -> structure: parameter
            "report_name" of String, parameter "report_ref" of String
         """
@@ -228,7 +234,6 @@ class Weka:
                              'returnVal is not type dict as required.')
         # return the results
         return [returnVal]
-
     def status(self, ctx):
         #BEGIN_STATUS
         returnVal = {'state': "OK",

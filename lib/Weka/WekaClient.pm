@@ -124,6 +124,15 @@ $return is a Weka.DTOutput
 DTParams is a reference to a hash where the following keys are defined:
 	workspace_name has a value which is a string
 	phenotype_ref has a value which is a string
+	confidenceFactor has a value which is a float
+	minNumObj has a value which is an int
+	numFolds has a value which is an int
+	reducedErrorPruning has a value which is a Weka.bool
+	seed has a value which is an int
+	unpruned has a value which is a Weka.bool
+	class_values has a value which is a string
+	class_labels has a value which is a string
+bool is an int
 DTOutput is a reference to a hash where the following keys are defined:
 	report_name has a value which is a string
 	report_ref has a value which is a string
@@ -139,6 +148,15 @@ $return is a Weka.DTOutput
 DTParams is a reference to a hash where the following keys are defined:
 	workspace_name has a value which is a string
 	phenotype_ref has a value which is a string
+	confidenceFactor has a value which is a float
+	minNumObj has a value which is an int
+	numFolds has a value which is an int
+	reducedErrorPruning has a value which is a Weka.bool
+	seed has a value which is an int
+	unpruned has a value which is a Weka.bool
+	class_values has a value which is a string
+	class_labels has a value which is a string
+bool is an int
 DTOutput is a reference to a hash where the following keys are defined:
 	report_name has a value which is a string
 	report_ref has a value which is a string
@@ -289,7 +307,7 @@ sub _validate_version {
 
 
 
-=head2 DTParams
+=head2 bool
 
 =over 4
 
@@ -297,7 +315,33 @@ sub _validate_version {
 
 =item Description
 
-Insert your typespec information here.
+A binary boolean
+
+
+=item Definition
+
+=begin html
+
+<pre>
+an int
+</pre>
+
+=end html
+
+=begin text
+
+an int
+
+=end text
+
+=back
+
+
+
+=head2 DTParams
+
+=over 4
+
 
 
 =item Definition
@@ -308,6 +352,14 @@ Insert your typespec information here.
 a reference to a hash where the following keys are defined:
 workspace_name has a value which is a string
 phenotype_ref has a value which is a string
+confidenceFactor has a value which is a float
+minNumObj has a value which is an int
+numFolds has a value which is an int
+reducedErrorPruning has a value which is a Weka.bool
+seed has a value which is an int
+unpruned has a value which is a Weka.bool
+class_values has a value which is a string
+class_labels has a value which is a string
 
 </pre>
 
@@ -318,6 +370,14 @@ phenotype_ref has a value which is a string
 a reference to a hash where the following keys are defined:
 workspace_name has a value which is a string
 phenotype_ref has a value which is a string
+confidenceFactor has a value which is a float
+minNumObj has a value which is an int
+numFolds has a value which is an int
+reducedErrorPruning has a value which is a Weka.bool
+seed has a value which is an int
+unpruned has a value which is a Weka.bool
+class_values has a value which is a string
+class_labels has a value which is a string
 
 
 =end text

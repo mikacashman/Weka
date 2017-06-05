@@ -86,6 +86,24 @@ parameters :
             Whether pruning is performed.
         long-hint : |
             Whether pruning is performed.  (See Weka specs for more).
+
+	
+    class_values :
+        ui-name : |
+            Class Values (numeric)
+        short-hint : |
+            Numeric values of the growth of the phenotypes.  Text class will match below.
+        long-hint : |
+            Numeric values of the growth column of the phenotype data set.  Each will map to a specific text class listed below.
+
+    class_labels : 
+        ui-name : |
+           Class Labels (text)
+        short-hint : |
+           Text class labels of growth classes.  Match to numeric classes above.
+        ling-hint : |
+           Text class labels of the numeric growth classes in the phenotype data set.
+
 description : |
     <p>App runs Weka J48 decision tree classifier on a phenotype set.  Attributes are the media conditions and the classes are Growth Values.</p>
 

@@ -18,6 +18,8 @@ module Weka {
 		bool   reducedErrorPruning;
 		int    seed;
 		bool   unpruned;
+		string class_values;
+		string class_labels;
 	}DTParams;
 	typedef structure{
 		string report_name;

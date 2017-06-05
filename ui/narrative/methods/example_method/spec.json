@@ -88,6 +88,28 @@
 		"checked_value": "1",
 		"unchecked_value": "0"
 	    }
+	},	
+	{
+	    "id": "class_values",
+	    "optional": false,
+	    "advanced": false,
+	    "allow_multiple": false,
+	    "default_values": ["0,1"],
+	    "field_type": "text",
+	    "text_options": {
+		"validate_as": "string"
+	    }
+	},
+	{
+	    "id": "class_labels",
+	    "optional": false,
+	    "advanced": false,
+	    "allow_multiple": false,
+	    "default_values": ["NO_GROWTH,GROWTH"],
+	    "field_type": "text",
+	    "text_options": {
+		"validate_as": "string"
+	    }
 	}
     ],
     "behavior": {
@@ -104,7 +126,39 @@
                     "input_parameter": "phenotype_ref",
                     "target_property": "phenotype_ref",
 		    "target_type_transform": "ref"
-                }
+                },
+		{
+		    "input_parameter": "confidenceFactor",
+		    "target_property": "confidenceFactor"
+		},
+		{
+		    "input_parameter": "minNumObj",
+		    "target_property": "minNumObj"
+		},
+		{
+		    "input_parameter": "numFolds",
+		    "target_property": "numFolds"
+		},
+		{
+		    "input_parameter": "reducedErrorPruning",
+		    "target_property": "reducedErrorPruning"
+		},
+		{
+		    "input_parameter": "seed",
+		    "target_property": "seed"
+		},
+		{
+		    "input_parameter": "unpruned",
+		    "target_property": "unpruned"
+		},
+		{
+		    "input_parameter": "class_values",
+		    "target_property": "class_values"
+		},
+		{
+		    "input_parameter": "class_labels",
+		    "target_property": "class_labels"
+		}
             ],
             "output_mapping": [
                 {
