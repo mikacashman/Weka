@@ -3,6 +3,7 @@
 import os
 import sys
 import traceback
+import uuid
 from pprint import pprint, pformat
 from biokbase.workspace.client import Workspace as workspaceService
 #END_HEADER
