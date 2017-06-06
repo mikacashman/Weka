@@ -215,7 +215,8 @@ class Weka:
         if 'provenance' in ctx:
                 provenance = ctx['provenance']
         # add additional info to provenance here, in this case the input data object reference
-        provenance[0]['input_ws_objects']=[workspace_name+'/'+params['phenotype_ref']]
+        #provenance[0]['input_ws_objects']=[workspace_name+'/'+params['phenotype_ref']]
+        provenance[0]['input_ws_objects']=[params['phenotype_ref']]
         report_info_list = None
         try:
                 report_info_list = wsClient.save_objects({
