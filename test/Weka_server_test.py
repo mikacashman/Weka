@@ -123,3 +123,7 @@ class WekaTest(unittest.TestCase):
     def test_DTAdvancedMinObj(self):
 	print("starting advanced test -M...")
 	ret = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1496165061369','phenotype_ref':'4965/10/1','minNumObj':'10'})
+
+    def test_customClasses(self):
+	print("starting custom classes test...")
+	ret = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1496165061369','phenotype_ref':'4965/13/1','class_values':"1,2,3",'class_labels':"LOW,MED,HIGH"})

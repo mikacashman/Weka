@@ -67,9 +67,21 @@ class Weka:
         if 'phenotype_ref' not in params:
         	raise ValueError('Parameter phenotype is not set in input arguments')
         phenotype = params['phenotype_ref']
-        
+        if 'class_values' not in params:
+		class_values=["0","1"]
+	else:
+		class_values=list(params['class_values'].split(","))
+	if 'class_labels' not in params:
+		class_labels=["NO_GROWTH","GROWTH"]
+	else:
+		class_labels=list(params['class_labels'].split(","))
+	print(class_values)
+	print(class_labels)
+	if len(class_values) <> len(class_labels):
+		raise ValueError('Class Values and Class Labels must have equal length, each class seperated by a comma')
 	#STEP 2 - Get the input data
-        token = ctx['token']
+        print(params)
+	token = ctx['token']
         wsClient = workspaceService(self.workspaceURL, token=token)
         try:
                 pheno = wsClient.get_objects([{'ref': phenotype}])[0]['data']
@@ -79,7 +91,8 @@ class Weka:
                 orig_error = ''.join('   ' + line for line in lines)
                 raise ValueError('Error loading original Phenotype object from workspace:\n' + orig_error)
         print('Got Phenotype')
-	print(params)
+	classes = dict(zip(class_values,class_labels))
+	print(classes)
 	print 
 
         ### STEP 3 - Create Matrix
@@ -133,8 +146,16 @@ class Weka:
 	arff.write("@RELATION J48DT_Phenotype\n\n")
 	for i in range(0,len(compounds)):
 		arff.write("@ATTRIBUTE " + compounds[i] + " {ON,OFF}\n")
-	arff.write("@ATTRIBUTE class {GROWTH,NO_GROWTH}")
-	arff.write("\n@data\n")
+	arff.write("@ATTRIBUTE class {")
+	count=len(classes)
+	temp=0
+	for key, value in classes.items():
+		temp+=1	
+		if temp==count:
+			arff.write(value)
+		else:
+			arff.write(value + ",")
+	arff.write("}\n\n@data\n")
 	for i in range(0,len(phenos)):
 		for j in range(0,len(phenos[i])):
 			if phenos[i][j] == 1:
@@ -142,14 +163,18 @@ class Weka:
 			elif phenos[i][j] == 0:
 				arff.write("OFF,")
 			else:
-				raise ValueError('Error: Invalid compound in phenos associated with phenotype.  Must be a 1 (for ON) or 0 (for OFF).  Please report bug.')
+				raise ValueError('Error: Invalid compound in phenos associated with phenotype.  Must be a 1 (for ON) or 0 (for OFF).')
+		try:
+			arff.write(classes[str(growth[i])] + '\n')
+		except:
+			raise ValueError('Class dictionary key error.  Can\'t find class label for ',growth[i])
 		
-		if growth[i] == 0:
-			arff.write("GROWTH" + '\n')
-		elif growth[i] == 1:
-			arff.write("NO_GROWTH" + '\n')
-		else:
-			raise ValueError('Error: Invalid growth class associated with phenotype.  Must be a 1 (for growth) or 0 (for no_growth).  Please check your phenotype data set.')
+		#if growth[i] == 0:
+		#	arff.write("GROWTH" + '\n')
+		#elif growth[i] == 1:
+		#	arff.write("NO_GROWTH" + '\n')
+		#else:
+		#	raise ValueError('Error: Invalid growth class associated with phenotype.  Must be a 1 (for growth) or 0 (for no_growth).  Please check your phenotype data set.')
 	arff.close()
 		
         ### STEP 5 - Send to WEKA
