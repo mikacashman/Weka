@@ -145,7 +145,7 @@ class Weka:
 	arff = open(wekafile,"w+")
 	arff.write("@RELATION J48DT_Phenotype\n\n")
 	for i in range(0,len(compounds)):
-		arff.write("@ATTRIBUTE " + compounds[i] + " {ON,OFF}\n")
+		arff.write("@ATTRIBUTE " + compounds[i][-8:] + " {ON,OFF}\n")
 	arff.write("@ATTRIBUTE class {")
 	count=len(classes)
 	temp=0
@@ -169,12 +169,6 @@ class Weka:
 		except:
 			raise ValueError('Class dictionary key error.  Can\'t find class label for ',growth[i])
 		
-		#if growth[i] == 0:
-		#	arff.write("GROWTH" + '\n')
-		#elif growth[i] == 1:
-		#	arff.write("NO_GROWTH" + '\n')
-		#else:
-		#	raise ValueError('Error: Invalid growth class associated with phenotype.  Must be a 1 (for growth) or 0 (for no_growth).  Please check your phenotype data set.')
 	arff.close()
 		
         ### STEP 5 - Send to WEKA
@@ -220,7 +214,7 @@ class Weka:
         if 'provenance' in ctx:
                 provenance = ctx['provenance']
         # add additional info to provenance here, in this case the input data object reference
-        provenance[0]['input_ws_objects']=[workspace_name+'/'+pheno['id']]
+        provenance[0]['input_ws_objects']=[workspace_name+'/'+params['phenotype_ref']]
         report_info_list = None
         try:
                 report_info_list = wsClient.save_objects({
@@ -229,7 +223,7 @@ class Weka:
                         {   
                                 'type':'KBaseReport.Report',
                                 'data':reportObj,
-                                'name':'FS_report',
+                                'name':'DT_report' + str(hex(uuid.getnode())),
                                 'meta':{},
                                 'hidden':1, # important!  make sure the report is hidden
                                 'provenance':provenance
