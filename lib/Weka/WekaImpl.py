@@ -201,8 +201,8 @@ class Weka:
         outfile = open(outfilename,'r')
 	print("File opened")
 	print(type(outfile))
-	report = "Weka Call: " + call
-	report+= outfile.read()
+	print("Weka Call: " + call)
+	report = outfile.read()
 	print("File read")     
 	print(type(report)) 
 	
