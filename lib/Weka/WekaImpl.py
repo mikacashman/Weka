@@ -26,7 +26,7 @@ class Weka:
     ######################################### noqa
     VERSION = "0.0.1"
     GIT_URL = "https://github.com/mikacashman/Weka.git"
-    GIT_COMMIT_HASH = "0d9f5f08bbcc32573f6b564231f15594e14e61dd"
+    GIT_COMMIT_HASH = "b9656d69c359d4b907d7bfd832b13d4fa459a3c3"
 
     #BEGIN_CLASS_HEADER
     workspaceURL = None
