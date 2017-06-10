@@ -1,0 +1,75 @@
+
+J48 pruned tree
+------------------
+
+cpd00027 = ON
+|   cpd00028 = ON: GROWTH (31.0)
+|   cpd00028 = OFF
+|   |   cpd15500 = ON
+|   |   |   cpd03424 = ON: GROWTH (8.0)
+|   |   |   cpd03424 = OFF: NO_GROWTH (7.0/1.0)
+|   |   cpd15500 = OFF: GROWTH (12.0/1.0)
+cpd00027 = OFF: NO_GROWTH (63.0/1.0)
+
+Number of Leaves  : 	5
+
+Size of the tree : 	9
+
+
+Time taken to build model: [0-9]+.[0-9]+ seconds
+Time taken to test model on training data: [0-9]+.[0-9]+ seconds
+
+=== Error on training data ===
+
+Correctly Classified Instances         118               97.5207 %
+Incorrectly Classified Instances         3                2.4793 %
+Kappa statistic                          0.9493
+Mean absolute error                      0.0456
+Root mean squared error                  0.151 
+Relative absolute error                  9.2977 %
+Root relative squared error             30.497  %
+Total Number of Instances              121     
+
+
+=== Detailed Accuracy By Class ===
+
+               TP Rate   FP Rate   Precision   Recall  F-Measure   ROC Area  Class
+                 0.962     0.014      0.98      0.962     0.971      0.987    GROWTH
+                 0.986     0.038      0.971     0.986     0.978      0.987    NO_GROWTH
+Weighted Avg.    0.975     0.028      0.975     0.975     0.975      0.987
+
+
+=== Confusion Matrix ===
+
+  a  b   <-- classified as
+ 50  2 |  a = GROWTH
+  1 68 |  b = NO_GROWTH
+
+
+
+=== Stratified cross-validation ===
+
+Correctly Classified Instances         114               94.2149 %
+Incorrectly Classified Instances         7                5.7851 %
+Kappa statistic                          0.8828
+Mean absolute error                      0.0775
+Root mean squared error                  0.2311
+Relative absolute error                 15.8029 %
+Root relative squared error             46.674  %
+Total Number of Instances              121     
+
+
+=== Detailed Accuracy By Class ===
+
+               TP Rate   FP Rate   Precision   Recall  F-Measure   ROC Area  Class
+                 0.962     0.072      0.909     0.962     0.935      0.946    GROWTH
+                 0.928     0.038      0.97      0.928     0.948      0.946    NO_GROWTH
+Weighted Avg.    0.942     0.053      0.944     0.942     0.942      0.946
+
+
+=== Confusion Matrix ===
+
+  a  b   <-- classified as
+ 50  2 |  a = GROWTH
+  5 64 |  b = NO_GROWTH
+

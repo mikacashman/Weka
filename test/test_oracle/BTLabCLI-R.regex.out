@@ -1,0 +1,77 @@
+
+Options: -R -N 11 
+
+J48 pruned tree
+------------------
+
+Glucose = ON
+|   Hematin = ON: GROWTH (27.0)
+|   Hematin = OFF
+|   |   Vitamin_K = ON
+|   |   |   B12 = ON: GROWTH (7.0)
+|   |   |   B12 = OFF: NO_GROWTH (6.0/1.0)
+|   |   Vitamin_K = OFF: GROWTH (12.0/1.0)
+Glucose = OFF: NO_GROWTH (58.0/1.0)
+
+Number of Leaves  : 	5
+
+Size of the tree : 	9
+
+
+Time taken to build model: [0-9]+.[0-9]+ seconds
+Time taken to test model on training data: [0-9]+.[0-9]+ seconds
+
+=== Error on training data ===
+
+Correctly Classified Instances         118               97.5207 %
+Incorrectly Classified Instances         3                2.4793 %
+Kappa statistic                          0.9493
+Mean absolute error                      0.0473
+Root mean squared error                  0.1511
+Relative absolute error                  9.6391 %
+Root relative squared error             30.5196 %
+Total Number of Instances              121     
+
+
+=== Detailed Accuracy By Class ===
+
+               TP Rate   FP Rate   Precision   Recall  F-Measure   ROC Area  Class
+                 0.962     0.014      0.98      0.962     0.971      0.987    GROWTH
+                 0.986     0.038      0.971     0.986     0.978      0.987    NO_GROWTH
+Weighted Avg.    0.975     0.028      0.975     0.975     0.975      0.987
+
+
+=== Confusion Matrix ===
+
+  a  b   <-- classified as
+ 50  2 |  a = GROWTH
+  1 68 |  b = NO_GROWTH
+
+
+
+=== Stratified cross-validation ===
+
+Correctly Classified Instances         115               95.0413 %
+Incorrectly Classified Instances         6                4.9587 %
+Kappa statistic                          0.8998
+Mean absolute error                      0.0862
+Root mean squared error                  0.2166
+Relative absolute error                 17.5773 %
+Root relative squared error             43.748  %
+Total Number of Instances              121     
+
+
+=== Detailed Accuracy By Class ===
+
+               TP Rate   FP Rate   Precision   Recall  F-Measure   ROC Area  Class
+                 0.981     0.072      0.911     0.981     0.944      0.95     GROWTH
+                 0.928     0.019      0.985     0.928     0.955      0.95     NO_GROWTH
+Weighted Avg.    0.95      0.042      0.953     0.95      0.951      0.95 
+
+
+=== Confusion Matrix ===
+
+  a  b   <-- classified as
+ 51  1 |  a = GROWTH
+  5 64 |  b = NO_GROWTH
+
