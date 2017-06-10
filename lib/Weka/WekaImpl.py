@@ -26,7 +26,7 @@ class Weka:
     ######################################### noqa
     VERSION = "0.0.1"
     GIT_URL = "https://github.com/mikacashman/Weka.git"
-    GIT_COMMIT_HASH = "b9656d69c359d4b907d7bfd832b13d4fa459a3c3"
+    GIT_COMMIT_HASH = "0d9f5f08bbcc32573f6b564231f15594e14e61dd"
 
     #BEGIN_CLASS_HEADER
     workspaceURL = None
@@ -61,7 +61,9 @@ class Weka:
         #runs J48 Deicison trees in weka on phenotype set
  
         ### STEP 1 - Parse input and catch any errors
-        print("Getting Data")
+        print
+	print
+	print("Getting Data")
 	if 'workspace_name' not in params:
                 raise ValueError('Parameter workspace is not set in input arguments')
         workspace_name = params['workspace_name']
@@ -76,12 +78,12 @@ class Weka:
 		class_labels=["NO_GROWTH","GROWTH"]
 	else:
 		class_labels=list(params['class_labels'].split(","))
-	print(class_values)
-	print(class_labels)
+	#print(class_values)
+	#print(class_labels)
 	if len(class_values) <> len(class_labels):
 		raise ValueError('Class Values and Class Labels must have equal length, each class seperated by a comma')
 	#STEP 2 - Get the input data
-        print(params)
+        #print(params)
 	token = ctx['token']
         wsClient = workspaceService(self.workspaceURL, token=token)
         try:
@@ -93,8 +95,8 @@ class Weka:
                 raise ValueError('Error loading original Phenotype object from workspace:\n' + orig_error)
         print('Got Phenotype')
 	classes = dict(zip(class_values,class_labels))
-	print(classes)
-	print 
+	#print(classes)
+	#print 
 
         ### STEP 3 - Create Matrix
 	#currently assumed the base media is the same for all phenotypes,
@@ -189,22 +191,22 @@ class Weka:
 		print("test3")
 		call+=" -U"	
 	if "confidenceFactor" in params and params['confidenceFactor'] is not None:
-		call+=" -C " + params['confidenceFactor']
+		call+=" -C " + str(params['confidenceFactor'])
 	if "minNumObj" in params and params['minNumObj'] is not None:
 		call+=" -M " + params['minNumObj']
-	print("Weka call is: " + call)
+	#print("Weka call is: " + call)
 	os.system(call)
-	print("Weka completed")
+	#print("Weka completed")
 
         ### STEP 6 - Print tree result to report
-	print(type(outfilename))
+	#print(type(outfilename))
         outfile = open(outfilename,'r')
-	print("File opened")
-	print(type(outfile))
+	#print("File opened")
+	#print(type(outfile))
 	print("Weka Call: " + call)
 	report = outfile.read()
-	print("File read")     
-	print(type(report)) 
+	#print("File read")     
+	#print(type(report)) 
 	
         reportObj = { 
                 'objects_created':[],
@@ -238,7 +240,7 @@ class Weka:
                 orig_error = ''.join('    ' + line for line in lines)
                 raise ValueError('Error saving Report object to workspace:\n' + orig_error)
         report_info = report_info_list[0]
-        print(report)
+        #print(report)
 
 
         print('Ready to return')

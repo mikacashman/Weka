@@ -4,6 +4,7 @@ import os  # noqa: F401
 import json  # noqa: F401
 import time
 import requests
+import re
 
 from os import environ
 try:
@@ -90,50 +91,81 @@ class WekaTest(unittest.TestCase):
         print("starting test...")
 	#test_dir = os.path.dirname(os.path.realpath(__file__))
 	ret = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1496165061369','phenotype_ref':'4965/10/1'})
-	testP_path = os.path.join(cls.cgf['scratch]',"/test_oracle/BTLabCLI.out")
+	print(ret[0])
+	report = self.wsClient.get_objects([{'ref': ret[0]['report_ref']}])[0]['data']
+	
+	print(os.path.join(self.cfg['scratch'],"/test_oracle/BTLabCLI.out"))
+	print(self.cfg['scratch'] + "/test_oracle/BTLabCLI.regex.out")
+	#testP_path = os.path.join(self.cfg['scratch'],"/test_oracle/BTLabCLI.out")
+	testP_path = self.cfg['scratch'] + "/test_oracle/BTLabCLI.regex.out"
 	print(testP_path)
-	print("Running assert...")
-	self.assertEqual(ret['text_message'],open(testP_path,"r").read())
+	#print("Running assert...")
+	
+	oracleFile = open(testP_path,"r").read().rstrip()
+	result = report['text_message'].rstrip()
+	hasMatch = re.search(oracleFile, result) != None
+	print(hasMatch)
+	self.assertTrue(hasMatch)
 
     def test_DTAdvancedUnPruned(self):
 	print("starting advanced test -U...")
 	ret = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1496165061369','phenotype_ref':'4965/10/1','unpruned':1})
-	testP_path = os.path.join(cls.cgf['scratch]',"/test_oracle/BTLabCLI-U.out")
-	print(testP_path)
+	testP_path = self.cfg['scratch']+"/test_oracle/BTLabCLI-U.regex.out"
+	report = self.wsClient.get_objects([{'ref': ret[0]['report_ref']}])[0]['data']
 	print("Running assert...")
-	self.assertEqual(ret['text_message'],open(testP_path,"r").read())
+	oracleFile = open(testP_path,"r").read().rstrip()
+	result = report['text_message'].rstrip()
+	hasMatch = re.search(oracleFile, result) != None
+	print(hasMatch)
+	self.assertTrue(hasMatch)
 
     def test_DTAdvancedReducedPrune(self):
 	print("starting advanced test -R...")
 	ret = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1496165061369','phenotype_ref':'4965/10/1','reducedErrorPruning':1,'numFolds':'11','seed':'142'})
-	testP_path = os.path.join(cls.cgf['scratch]',"/test_oracle/BTLabCLI-R.out")
-	print(testP_path)
+	report = self.wsClient.get_objects([{'ref': ret[0]['report_ref']}])[0]['data']
+	testP_path = self.cfg['scratch']+"/test_oracle/BTLabCLI-R.regex.out"
 	print("Running assert...")
-	self.assertEqual(ret['text_message'],open(testP_path,"r").read())
+	oracleFile = open(testP_path,"r").read().rstrip()
+	result = report['text_message'].rstrip()
+	hasMatch = re.search(oracleFile, result) != None
+	print(hasMatch)
+	self.assertTrue(hasMatch)
 
     def test_DTAdvancedMinObj(self):
 	print("starting advanced test -M...")
 	ret = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1496165061369','phenotype_ref':'4965/10/1','minNumObj':'10'})
-	testP_path = os.path.join(cls.cgf['scratch]',"/test_oracle/BTLabCLI-M.out")
-	print(testP_path)
+	report = self.wsClient.get_objects([{'ref': ret[0]['report_ref']}])[0]['data']
+	testP_path = self.cfg['scratch']+"/test_oracle/BTLabCLI-M.regex.out"
 	print("Running assert...")
-	self.assertEqual(ret['text_message'],open(testP_path,"r").read())
-
+	oracleFile = open(testP_path,"r").read().rstrip()
+	result = report['text_message'].rstrip()
+	hasMatch = re.search(oracleFile, result) != None
+	print(hasMatch)
+	self.assertTrue(hasMatch)
 
     def test_DTcustomClasses(self):
 	print("starting custom classes test...")
 	ret = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1496165061369','phenotype_ref':'4965/13/1','class_values':"1,2,3",'class_labels':"LOW,MED,HIGH"})
-	testP_path = os.path.join(cls.cgf['scratch]',"/test_oracle/BTKBaseCLI-custclass.out")
-	print(testP_path)
+	report = self.wsClient.get_objects([{'ref': ret[0]['report_ref']}])[0]['data']
+	testP_path = self.cfg['scratch']+"/test_oracle/BTKBaseCLI-custclass.regex.out"
 	print("Running assert...")
-	self.assertEqual(ret['text_message'],open(testP_path,"r").read())
-
+	oracleFile = open(testP_path,"r").read().rstrip()
+	result = report['text_message'].rstrip()
+	#print(result)
+	hasMatch = re.search(oracleFile, result) != None
+	print(hasMatch)
+	self.assertTrue(hasMatch)
 
     def test_DTAdvnacedConf(self):
 	print("starting advanced test -C...")
 	ret = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1496165061369','phenotype_ref':'4965/10/1','confidenceFactor':.1})
-	testP_path = os.path.join(cls.cgf['scratch]',"/test_oracle/BTLabCLI-C.out")
-	print(testP_path)
+	report = self.wsClient.get_objects([{'ref': ret[0]['report_ref']}])[0]['data']
+	testP_path = self.cfg['scratch']+"/test_oracle/BTLabCLI-C.regex.out"
 	print("Running assert...")
-	self.assertEqual(ret['text_message'],open(testP_path,"r").read())
+	oracleFile = open(testP_path,"r").read().rstrip()
+	result = report['text_message'].rstrip()
+	print(result)
+	hasMatch = re.search(oracleFile, result)
+	print(hasMatch)
+	self.assertTrue(hasMatch)
 
