@@ -172,18 +172,17 @@ class Weka:
 	outfilename = self.scratch + "/weka.out"
 	call = "java weka.classifiers.trees.J48 -t " + wekafile + " -i > " + outfilename 
 	if "reducedErrorPruning" in params and params['reducedErrorPruning'] is not None:
-		if params['reducedErrorPruning'] == 1:
+		if params['reducedErrorPruning'] == "1":
 			call+=" -R"
-	if "unpruned" in params and params['unpruned'] is not None and params['unpruned'] == 1:
+	if "unpruned" in params and params['unpruned'] is not None and params['unpruned'] == "1":
 		call+=" -U"	
-	if "confidenceFactor" in params and params['confidenceFactor'] is not None and params['confidenceFactor'] <> 0.25:
+	if "confidenceFactor" in params and params['confidenceFactor'] is not None and params['confidenceFactor'] <> "0.25":
 		call+=" -C " + str(params['confidenceFactor'])
-		#if not "reducedErrorPruning" in params: call+=" -C " + str(params['confidenceFactor'])
-	if "minNumObj" in params and params['minNumObj'] is not None and params['minNumObj'] <> 2:
+	if "minNumObj" in params and params['minNumObj'] is not None and params['minNumObj'] <> "2":
 		call+=" -M " + params['minNumObj']
 	if "seed" in params and params['seed'] is not None:
 		call+=" -s " + str(params['seed'])
-	if "numFolds" in params and params['numFolds'] is not None and params['numFolds'] <> 3:
+	if "numFolds" in params and params['numFolds'] is not None and params['numFolds'] <> "3":
 		call+=" -x " + str(params['numFolds'])
 	print("Weka call is: " + call)
 	try:
