@@ -175,7 +175,7 @@ class Weka:
 	if "reducedErrorPruning" in params and params['reducedErrorPruning'] is not None:
 		if params['reducedErrorPruning'] == "1":
 			call+=" -R"
-	if "unpruned" in params and params['unpruned'] is not None and params['unpruned'] == "1":
+	if "unpruned" in params and params['unpruned'] is not None and params['unpruned'] == 1:
 		call+=" -U"	
 	if "confidenceFactor" in params and params['confidenceFactor'] is not None and params['confidenceFactor'] <> "0.25":
 		call+=" -C " + str(params['confidenceFactor'])
