@@ -171,6 +171,7 @@ class Weka:
 	#	use Weka's built in - need to catch the Weka exception
 	outfilename = self.scratch + "/weka.out"
 	call = "java weka.classifiers.trees.J48 -t " + wekafile + " -i > " + outfilename 
+	print(params)
 	if "reducedErrorPruning" in params and params['reducedErrorPruning'] is not None:
 		if params['reducedErrorPruning'] == "1":
 			call+=" -R"
