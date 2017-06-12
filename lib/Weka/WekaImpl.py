@@ -61,9 +61,6 @@ class Weka:
         #runs J48 Deicison trees in weka on phenotype set
  
         ### STEP 1 - Parse input and catch any errors
-        print
-	print
-	print("Getting Data")
 	if 'workspace_name' not in params:
                 raise ValueError('Parameter workspace is not set in input arguments')
         workspace_name = params['workspace_name']
@@ -78,12 +75,9 @@ class Weka:
 		class_labels=["NO_GROWTH","GROWTH"]
 	else:
 		class_labels=list(params['class_labels'].split(","))
-	#print(class_values)
-	#print(class_labels)
 	if len(class_values) <> len(class_labels):
 		raise ValueError('Class Values and Class Labels must have equal length, each class seperated by a comma')
 	#STEP 2 - Get the input data
-        #print(params)
 	token = ctx['token']
         wsClient = workspaceService(self.workspaceURL, token=token)
         try:
@@ -93,10 +87,7 @@ class Weka:
                 lines = traceback.format_exception(exc_type, exc_value, exc_traceback)
                 orig_error = ''.join('   ' + line for line in lines)
                 raise ValueError('Error loading original Phenotype object from workspace:\n' + orig_error)
-        print('Got Phenotype')
 	classes = dict(zip(class_values,class_labels))
-	#print(classes)
-	#print 
 
         ### STEP 3 - Create Matrix
 	#currently assumed the base media is the same for all phenotypes,
@@ -179,34 +170,28 @@ class Weka:
 	outfilename = self.scratch + "/weka.out"
 	call = "java weka.classifiers.trees.J48 -t " + wekafile + " -i > " + outfilename 
 	if "reducedErrorPruning" in params and params['reducedErrorPruning'] is not None:
-		print("test1")
-		if params['reducedErrorPruning'] == 1:
-			print("test2")
-			call+=" -R"
-			if "numFolds" in params and params['numFolds'] is not None:
-				call+=" -N " + params['numFolds']
-			if "seed" in params and params['seed'] is not None:
-				call+=" -Q " + params['seed']
+		#if params['reducedErrorPruning'] == 1:
+		#	print("test2")
+		call+=" -R"
+		#	if "numFolds" in params and params['numFolds'] is not None:
+		#		call+=" -N " + params['numFolds']
 	if "unpruned" in params and params['unpruned'] is not None and params['unpruned'] == 1:
-		print("test3")
 		call+=" -U"	
 	if "confidenceFactor" in params and params['confidenceFactor'] is not None:
 		call+=" -C " + str(params['confidenceFactor'])
 	if "minNumObj" in params and params['minNumObj'] is not None:
 		call+=" -M " + params['minNumObj']
-	#print("Weka call is: " + call)
+	if "seed" in params and params['seed'] is not None:
+		call+=" -Q " + str(params['seed'])
+	if "numFolds" in params and params['numFolds'] is not None:
+		call+=" -x " + str(params['numFolds'])
+	print("Weka call is: " + call)
 	os.system(call)
-	#print("Weka completed")
+	
 
         ### STEP 6 - Print tree result to report
-	#print(type(outfilename))
         outfile = open(outfilename,'r')
-	#print("File opened")
-	#print(type(outfile))
-	print("Weka Call: " + call)
 	report = outfile.read()
-	#print("File read")     
-	#print(type(report)) 
 	
         reportObj = { 
                 'objects_created':[],
@@ -240,7 +225,6 @@ class Weka:
                 orig_error = ''.join('    ' + line for line in lines)
                 raise ValueError('Error saving Report object to workspace:\n' + orig_error)
         report_info = report_info_list[0]
-        #print(report)
 
 
         print('Ready to return')
