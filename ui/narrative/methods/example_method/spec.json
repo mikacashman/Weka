@@ -37,7 +37,7 @@
 	    "optional": true,
 	    "advanced": true,
 	    "allow_multiple": false,
-	    "defualt_values": [2],
+	    "default_values": [2],
 	    "field_type": "text",
 	    "text_options": {
 		"valid_as": "int"
@@ -62,8 +62,8 @@
 	    "default_values": [false],
 	    "field_type": "checkbox",
 	    "checkbox_options": {
-		"checked_value": 1,
-		"unchecked_value": 0
+		"checked_value": "1",
+		"unchecked_value": "0"
 	    }
 	},
 	{
