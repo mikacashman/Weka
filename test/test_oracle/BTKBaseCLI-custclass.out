@@ -1,0 +1,75 @@
+
+J48 pruned tree
+------------------
+
+cpd00027 = ON: MED (64.0/2.0)
+cpd00027 = OFF
+|   cpd00029 = ON: LOW (32.0)
+|   cpd00029 = OFF: HIGH (32.0)
+
+Number of Leaves  : 	3
+
+Size of the tree : 	5
+
+
+Time taken to build model: 0.08 seconds
+Time taken to test model on training data: 0.06 seconds
+
+=== Error on training data ===
+
+Correctly Classified Instances         126               98.4375 %
+Incorrectly Classified Instances         2                1.5625 %
+Kappa statistic                          0.9752
+Mean absolute error                      0.0202
+Root mean squared error                  0.1005
+Relative absolute error                  4.7817 %
+Root relative squared error             21.8804 %
+Total Number of Instances              128     
+
+
+=== Detailed Accuracy By Class ===
+
+               TP Rate   FP Rate   Precision   Recall  F-Measure   ROC Area  Class
+                 0.941     0          1         0.941     0.97       0.981    LOW
+                 1         0          1         1         1          1        MED
+                 1         0.03       0.969     1         0.984      0.985    HIGH
+Weighted Avg.    0.984     0.015      0.985     0.984     0.984      0.988
+
+
+=== Confusion Matrix ===
+
+  a  b  c   <-- classified as
+ 32  0  2 |  a = LOW
+  0 32  0 |  b = HIGH
+  0  0 62 |  c = MED
+
+
+
+=== Stratified cross-validation ===
+
+Correctly Classified Instances         126               98.4375 %
+Incorrectly Classified Instances         2                1.5625 %
+Kappa statistic                          0.9752
+Mean absolute error                      0.0204
+Root mean squared error                  0.1019
+Relative absolute error                  4.8193 %
+Root relative squared error             22.1854 %
+Total Number of Instances              128     
+
+
+=== Detailed Accuracy By Class ===
+
+               TP Rate   FP Rate   Precision   Recall  F-Measure   ROC Area  Class
+                 0.941     0          1         0.941     0.97       0.965    LOW
+                 1         0.03       0.969     1         0.984      0.973    MED
+                 1         0          1         1         1          1        HIGH
+Weighted Avg.    0.984     0.015      0.985     0.984     0.984      0.977
+
+
+=== Confusion Matrix ===
+
+  a  b  c   <-- classified as
+ 32  2  0 |  a = LOW
+  0 62  0 |  b = MED
+  0  0 32 |  c = HIGH
+
