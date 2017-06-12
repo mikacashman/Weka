@@ -59,7 +59,7 @@ class Weka:
         # return variables are: returnVal
         #BEGIN DecisionTree
         #runs J48 Deicison trees in weka on phenotype set
- 
+
         ### STEP 1 - Parse input and catch any errors
 	if 'workspace_name' not in params:
                 raise ValueError('Parameter workspace is not set in input arguments')
@@ -167,32 +167,35 @@ class Weka:
 		
         ### STEP 5 - Send to WEKA
 	#Call weka with a different protocol?  os.system not recomeneded - what is?
+	#Need to account for invalid settings
+	#	use Weka's built in - need to catch the Weka exception
 	outfilename = self.scratch + "/weka.out"
 	call = "java weka.classifiers.trees.J48 -t " + wekafile + " -i > " + outfilename 
 	if "reducedErrorPruning" in params and params['reducedErrorPruning'] is not None:
-		#if params['reducedErrorPruning'] == 1:
-		#	print("test2")
-		call+=" -R"
-		#	if "numFolds" in params and params['numFolds'] is not None:
-		#		call+=" -N " + params['numFolds']
+		if params['reducedErrorPruning'] == 1:
+			call+=" -R"
 	if "unpruned" in params and params['unpruned'] is not None and params['unpruned'] == 1:
 		call+=" -U"	
-	if "confidenceFactor" in params and params['confidenceFactor'] is not None:
+	if "confidenceFactor" in params and params['confidenceFactor'] is not None and params['confidenceFactor'] <> 0.25:
 		call+=" -C " + str(params['confidenceFactor'])
-	if "minNumObj" in params and params['minNumObj'] is not None:
+		#if not "reducedErrorPruning" in params: call+=" -C " + str(params['confidenceFactor'])
+	if "minNumObj" in params and params['minNumObj'] is not None and params['minNumObj'] <> 2:
 		call+=" -M " + params['minNumObj']
 	if "seed" in params and params['seed'] is not None:
-		call+=" -Q " + str(params['seed'])
-	if "numFolds" in params and params['numFolds'] is not None:
+		call+=" -s " + str(params['seed'])
+	if "numFolds" in params and params['numFolds'] is not None and params['numFolds'] <> 3:
 		call+=" -x " + str(params['numFolds'])
 	print("Weka call is: " + call)
-	os.system(call)
-	
+	try:
+		os.system(call)
+	except:
+		print("EXCEPTION---------------------------------------")
 
         ### STEP 6 - Print tree result to report
         outfile = open(outfilename,'r')
 	report = outfile.read()
-	
+	#print(report)
+		
         reportObj = { 
                 'objects_created':[],
                 'text_message':report

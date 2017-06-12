@@ -98,14 +98,14 @@ class WekaTest(unittest.TestCase):
 	self.assertTrue(self.compare_by_lines(oracle_path,report))
 
 
-#    def test_DTAdvancedUnPruned(self):
-#	print
-#	print("starting advanced test -U...")
-#	ret = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1496165061369','phenotype_ref':'4965/10/1','unpruned':1})
-#	report = self.wsClient.get_objects([{'ref': ret[0]['report_ref']}])[0]['data']
-#	oracle_path = self.cfg['scratch']+"/test_oracle/BTLabCLI-U.out"
-	
-#	self.assertTrue(self.compare_by_lines(oracle_path,report))
+    def test_DTAdvancedUnPruned(self):
+	print
+	print("starting advanced test -U...")
+	ret = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1496165061369','phenotype_ref':'4965/10/1','unpruned':1})
+	report = self.wsClient.get_objects([{'ref': ret[0]['report_ref']}])[0]['data']
+	oracle_path = self.cfg['scratch']+"/test_oracle/BTLabCLI-U.out"
+		
+	self.assertTrue(self.compare_by_lines(oracle_path,report))
 
 
     def test_DTAdvancedReducedPrune(self):
@@ -126,14 +126,14 @@ class WekaTest(unittest.TestCase):
 
 	self.assertTrue(self.compare_by_lines(oracle_path,report))
 
-#    def test_DTcustomClasses(self):
-#	print
-#	print("starting custom classes test...")
-#	ret = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1496165061369','phenotype_ref':'4965/13/1','class_values':"1,2,3",'class_labels':"LOW,MED,HIGH"})
-#	report = self.wsClient.get_objects([{'ref': ret[0]['report_ref']}])[0]['data']
-#	oracle_path = self.cfg['scratch']+"/test_oracle/BTKBaseCLI-custclass.out"
-#
-#	self.assertTrue(self.compare_by_lines(oracle_path,report))
+    def test_DTcustomClasses(self):
+	print
+	print("starting custom classes test...")
+	ret = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1496165061369','phenotype_ref':'4965/13/1','class_values':"1,2,3",'class_labels':"LOW,MED,HIGH"})
+	report = self.wsClient.get_objects([{'ref': ret[0]['report_ref']}])[0]['data']
+	oracle_path = self.cfg['scratch']+"/test_oracle/BTKBaseCLI-custclass.out"
+
+	self.assertTrue(self.compare_by_lines(oracle_path,report))
 
     def test_DTAdvnacedConf(self):
 	print
@@ -168,10 +168,11 @@ class WekaTest(unittest.TestCase):
 	for x in range(0,len(oracleFileSplit)):
 		if oracleFileSplit[x] == "=== Stratified cross-validation ===" and resultSplit[x] == "=== Stratified cross-validation ===":
 			isSame = True
+			break
 		elif oracleFileSplit[x] == resultSplit[x]:
 			isSame = True
 		else:
-			print(oracleFileSplit[x]+'\n'+resultSplit[x]+'\n')
+			print("MISMATCH\n" + oracleFileSplit[x]+'\n'+resultSplit[x]+'\n')
 			isSame = False
 			break
 	print("test val is: " + str(isSame))
