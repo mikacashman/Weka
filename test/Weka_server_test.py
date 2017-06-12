@@ -76,7 +76,7 @@ class WekaTest(unittest.TestCase):
 
     def getContext(self):
         return self.__class__.ctx
-    
+   
     # NOTE: According to Python unittest naming rules test method names should start from 'test'. # noqa
     def test_DecisionTree(self):
         # Prepare test objects in workspace if needed using
@@ -93,26 +93,9 @@ class WekaTest(unittest.TestCase):
         print("starting test...")
 	ret = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1496165061369','phenotype_ref':'4965/10/1'})
 	report = self.wsClient.get_objects([{'ref': ret[0]['report_ref']}])[0]['data']
-	testP_path = self.cfg['scratch'] + "/test_oracle/BTLabCLI.out"
+	oracle_path = self.cfg['scratch'] + "/test_oracle/BTLabCLI.out"
 	
-	oracleFile = open(testP_path,"r").read()
-	result = report['text_message']
-	oracleFileReplaced = re.sub("[0-9]+\.[0-9]+ seconds","seconds",oracleFile)
-	resultReplaced = re.sub("[0-9]+\.[0-9]+ seconds","seconds",result)
-	oracleFileSplit = oracleFileReplaced.splitlines()
-	resultSplit = resultReplaced.splitlines()
-	
-	for x in range(0,len(oracleFileSplit)):
-		if oracleFileSplit[x] == "=== Stratified cross-validation ===" and resultSplit[x] == "=== Stratified cross-validation ===":
-			isSame = True
-		elif oracleFileSplit[x] == resultSplit[x]:
-			isSame = True
-		else:
-			print(oracleFileSplit[x]+'\n'+resultSplit[x]+'\n')
-			isSame = False
-			break
-	print("test val is: " + str(isSame))
-	self.assertTrue(isSame)
+	self.assertTrue(self.compare_by_lines(oracle_path,report))
 
 
 #    def test_DTAdvancedUnPruned(self):
@@ -120,26 +103,9 @@ class WekaTest(unittest.TestCase):
 #	print("starting advanced test -U...")
 #	ret = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1496165061369','phenotype_ref':'4965/10/1','unpruned':1})
 #	report = self.wsClient.get_objects([{'ref': ret[0]['report_ref']}])[0]['data']
-#	testP_path = self.cfg['scratch']+"/test_oracle/BTLabCLI-U.out"
+#	oracle_path = self.cfg['scratch']+"/test_oracle/BTLabCLI-U.out"
 	
-#	oracleFile = open(testP_path,"r").read()
-#	result = report['text_message']
-#	oracleFileReplaced = re.sub("[0-9]+\.[0-9]+ seconds","seconds",oracleFile)
-#	resultReplaced = re.sub("[0-9]+\.[0-9]+ seconds","seconds",result)
-#	oracleFileSplit = oracleFileReplaced.splitlines()
-#	resultSplit = resultReplaced.splitlines()
-	
-#	for x in range(0,len(oracleFileSplit)):
-#		if oracleFileSplit[x] == "=== Stratified cross-validation ===" and resultSplit[x] == "=== Stratified cross-validation ===":
-#			isSame = True
-#		elif oracleFileSplit[x] == resultSplit[x]:
-#			isSame = True
-#		else:
-#			print(oracleFileSplit[x]+'\n'+resultSplit[x]+'\n')
-#			isSame = False
-#			break
-#	print("test val is: " + str(isSame))
-#	self.assertTrue(isSame)
+#	self.assertTrue(self.compare_by_lines(oracle_path,report))
 
 
     def test_DTAdvancedReducedPrune(self):
@@ -147,119 +113,58 @@ class WekaTest(unittest.TestCase):
 	print("starting advanced test -R...")
 	ret = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1496165061369','phenotype_ref':'4965/10/1','reducedErrorPruning':1})
 	report = self.wsClient.get_objects([{'ref': ret[0]['report_ref']}])[0]['data']
-	testP_path = self.cfg['scratch']+"/test_oracle/BTLabCLI-R.out"
+	oracle_path = self.cfg['scratch']+"/test_oracle/BTLabCLI-R.out"
 	
-	oracleFile = open(testP_path,"r").read()
-	result = report['text_message']
-	oracleFileReplaced = re.sub("[0-9]+\.[0-9]+ seconds","seconds",oracleFile)
-	resultReplaced = re.sub("[0-9]+\.[0-9]+ seconds","seconds",result)
-	oracleFileSplit = oracleFileReplaced.splitlines()
-	resultSplit = resultReplaced.splitlines()
-	
-	for x in range(0,len(oracleFileSplit)):
-		if oracleFileSplit[x] == "=== Stratified cross-validation ===" and resultSplit[x] == "=== Stratified cross-validation ===":
-			isSame = True
-		elif oracleFileSplit[x] == resultSplit[x]:
-			isSame = True
-		else:
-			print(oracleFileSplit[x]+'\n'+resultSplit[x]+'\n')
-			isSame = False
-			break
-	print("test val is: " + str(isSame))
-	self.assertTrue(isSame)
+	self.assertTrue(self.compare_by_lines(oracle_path,report))
 
     def test_DTAdvancedMinObj(self):
 	print
 	print("starting advanced test -M...")
 	ret = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1496165061369','phenotype_ref':'4965/10/1','minNumObj':'10'})
 	report = self.wsClient.get_objects([{'ref': ret[0]['report_ref']}])[0]['data']
-	testP_path = self.cfg['scratch']+"/test_oracle/BTLabCLI-M.out"
+	oracle_path = self.cfg['scratch']+"/test_oracle/BTLabCLI-M.out"
 
-	oracleFile = open(testP_path,"r").read()
-	result = report['text_message']
-	oracleFileReplaced = re.sub("[0-9]+\.[0-9]+ seconds","seconds",oracleFile)
-	resultReplaced = re.sub("[0-9]+\.[0-9]+ seconds","seconds",result)
-	oracleFileSplit = oracleFileReplaced.splitlines()
-	resultSplit = resultReplaced.splitlines()
-	
-	for x in range(0,len(oracleFileSplit)):
-		if oracleFileSplit[x] == "=== Stratified cross-validation ===" and resultSplit[x] == "=== Stratified cross-validation ===":
-			isSame = True
-		elif oracleFileSplit[x] == resultSplit[x]:
-			isSame = True
-		else:
-			print(oracleFileSplit[x]+'\n'+resultSplit[x]+'\n')
-			isSame = False
-			break
-	print("test val is: " + str(isSame))
-	self.assertTrue(isSame)
+	self.assertTrue(self.compare_by_lines(oracle_path,report))
 
 #    def test_DTcustomClasses(self):
 #	print
 #	print("starting custom classes test...")
 #	ret = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1496165061369','phenotype_ref':'4965/13/1','class_values':"1,2,3",'class_labels':"LOW,MED,HIGH"})
 #	report = self.wsClient.get_objects([{'ref': ret[0]['report_ref']}])[0]['data']
-#	testP_path = self.cfg['scratch']+"/test_oracle/BTKBaseCLI-custclass.out"
+#	oracle_path = self.cfg['scratch']+"/test_oracle/BTKBaseCLI-custclass.out"
 #
-#	oracleFile = open(testP_path,"r").read()
-#	result = report['text_message']
-#	oracleFileReplaced = re.sub("[0-9]+\.[0-9]+ seconds","seconds",oracleFile)
-#	resultReplaced = re.sub("[0-9]+\.[0-9]+ seconds","seconds",result)
-#	oracleFileSplit = oracleFileReplaced.splitlines()
-#	resultSplit = resultReplaced.splitlines()
-#	
-#	for x in range(0,len(oracleFileSplit)):
-#		if oracleFileSplit[x] == "=== Stratified cross-validation ===" and resultSplit[x] == "=== Stratified cross-validation ===":
-#			isSame = True
-#		elif oracleFileSplit[x] == resultSplit[x]:
-#			isSame = True
-#		else:
-#			print(oracleFileSplit[x]+'\n'+resultSplit[x]+'\n')
-#			isSame = False
-#			break
-#	print("test val is: " + str(isSame))
-#	self.assertTrue(isSame)
+#	self.assertTrue(self.compare_by_lines(oracle_path,report))
 
     def test_DTAdvnacedConf(self):
 	print
 	print("starting advanced test -C...")
 	ret = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1496165061369','phenotype_ref':'4965/10/1','confidenceFactor':.1})
 	report = self.wsClient.get_objects([{'ref': ret[0]['report_ref']}])[0]['data']
-	testP_path = self.cfg['scratch']+"/test_oracle/BTLabCLI-C.out"
+	oracle_path = self.cfg['scratch']+"/test_oracle/BTLabCLI-C.out"
 
-	oracleFile = open(testP_path,"r").read()
-	result = report['text_message']
-	oracleFileReplaced = re.sub("[0-9]+\.[0-9]+ seconds","seconds",oracleFile)
-	resultReplaced = re.sub("[0-9]+\.[0-9]+ seconds","seconds",result)
-	oracleFileSplit = oracleFileReplaced.splitlines()
-	resultSplit = resultReplaced.splitlines()
-	
-	for x in range(0,len(oracleFileSplit)):
-		if oracleFileSplit[x] == "=== Stratified cross-validation ===" and resultSplit[x] == "=== Stratified cross-validation ===":
-			isSame = True
-		elif oracleFileSplit[x] == resultSplit[x]:
-			isSame = True
-		else:
-			print(oracleFileSplit[x]+'\n'+resultSplit[x]+'\n')
-			isSame = False
-			break
-	print("test val is: " + str(isSame))
-	self.assertTrue(isSame)
+	self.assertTrue(self.compare_by_lines(oracle_path,report))
     
     def test_Fail(self):
 	print
 	print("starting advanced test -C Fail...")
 	ret = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1496165061369','phenotype_ref':'4965/10/1','confidenceFactor':0.1})
 	report = self.wsClient.get_objects([{'ref': ret[0]['report_ref']}])[0]['data']
-	testP_path = self.cfg['scratch']+"/test_oracle/BTLabCLI-C.fail.out"
+	oracle_path = self.cfg['scratch']+"/test_oracle/BTLabCLI-C.fail.out"
 
-	oracleFile = open(testP_path,"r").read()
-	result = report['text_message']
+	self.assertFalse(self.compare_by_lines(oracle_path,report))
+
+    def compare_by_lines(self,oracle_path,test_report):
+	#get strings
+	oracleFile = open(oracle_path,"r").read()
+	result = test_report['text_message']
+	#remove variable time element
 	oracleFileReplaced = re.sub("[0-9]+\.[0-9]+ seconds","seconds",oracleFile)
 	resultReplaced = re.sub("[0-9]+\.[0-9]+ seconds","seconds",result)
+	#split into lists for easy compare
 	oracleFileSplit = oracleFileReplaced.splitlines()
 	resultSplit = resultReplaced.splitlines()
-	
+	#compare line by line until cross-validation
+	#ignore cross-validation as it can be variable
 	for x in range(0,len(oracleFileSplit)):
 		if oracleFileSplit[x] == "=== Stratified cross-validation ===" and resultSplit[x] == "=== Stratified cross-validation ===":
 			isSame = True
@@ -270,5 +175,5 @@ class WekaTest(unittest.TestCase):
 			isSame = False
 			break
 	print("test val is: " + str(isSame))
-	self.assertFalse(isSame)
+	return isSame 
 
