@@ -143,6 +143,34 @@ class WekaTest(unittest.TestCase):
 
 	self.assertFalse(self.compare_by_lines(oracle_path,report))
 
+    def test_SeedPass(self):
+	print
+	print("starting seed test Pass...")
+	ret = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1496165061369','phenotype_ref':'4965/10/1','seed':100})
+	ret2 = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1496165061369','phenotype_ref':'4965/10/1','seed':100})
+	report = self.wsClient.get_objects([{'ref': ret[0]['report_ref']}])[0]['data']
+	report2= self.wsClient.get_objects([{'ref': ret2[0]['report_ref']}])[0]['data']
+	result = report['text_message']
+	result2= report2['text_message']	
+	resultReplaced = re.sub("[0-9]+\.[0-9]+ seconds","seconds",result)
+	result2Replaced = re.sub("[0-9]+\.[0-9]+ seconds","seconds",result2)
+	
+	self.assertTrue(resultReplaced == result2Replaced)
+
+    def test_SeedFail(self):
+	print
+	print("starting seed test Fail...")
+	ret = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1496165061369','phenotype_ref':'4965/10/1'})#default seed is 1
+	ret2 = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1496165061369','phenotype_ref':'4965/10/1','seed':42})
+	report = self.wsClient.get_objects([{'ref': ret[0]['report_ref']}])[0]['data']
+	report2= self.wsClient.get_objects([{'ref': ret2[0]['report_ref']}])[0]['data']
+	result = report['text_message']
+	result2= report2['text_message']	
+	resultReplaced = re.sub("[0-9]+\.[0-9]+ seconds","seconds",result)
+	result2Replaced = re.sub("[0-9]+\.[0-9]+ seconds","seconds",result2)
+	
+	self.assertFalse(resultReplaced == result2Replaced)
+
     def compare_by_lines(self,oracle_path,test_report):
 	#get strings
 	oracleFile = open(oracle_path,"r").read()
