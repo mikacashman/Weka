@@ -79,7 +79,7 @@
 	},
 	{
 	    "id": "unpruned",
-	    "optional": false,
+	    "optional": true,
 	    "advanced": true,
 	    "allow_multiple": false,
 	    "default_values": [false],
