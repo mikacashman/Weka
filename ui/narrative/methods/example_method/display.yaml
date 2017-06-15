@@ -45,7 +45,7 @@ parameters :
         short-hint : | 
             The confidence factor used for pruning (smaller values incur more pruning).
         long-hint : | 
-            The confidence factor used for pruning (smaller values incur more pruning).  (See Weka specs for more).
+            The confidence factor used for pruning (smaller values incur more pruning).  (See Weka specs for more, command -C).
 
     minNumObj :
         ui-name : | 
@@ -53,23 +53,23 @@ parameters :
         short-hint : | 
             The minimum number of instances per leaf.
         long-hint : |   
-            The minimum number of instances per leaf.  (See Weka specs for more).
+            The minimum number of instances per leaf.  (See Weka specs for more, command -M).
     
     numFolds :
         ui-name : | 
             Num Folds
         short-hint : | 
-            Determines the amount of data used for reduced-error pruning.  One fold is used for pruning, the rest for growing the tree.
+            Sets the number of folds for cross-validation.
         long-hint : | 
-            Determines the amount of data used for reduced-error pruning.  One fold is used for pruning, the rest for growing the tree. (See Weka specs for more).
+            Sets the number of folds for cross-validation. (See Weka specs for more, command -x).
 
     seed :
         ui-name : | 
             Seed
         short-hint : | 
-            The seed used for randomizing the data when reduced-error pruning is used.
+            Sets the random number seed for cross-validation.
         long-hint : | 
-            The seed used for randomizing the data when reduced-error pruning is used.  (See Weka specs for more).
+            Sets the random number seed for cross-validation.  (See Weka specs for more, command -s).
     
     unpruned :
         ui-name : | 
@@ -77,7 +77,7 @@ parameters :
         short-hint : | 
             Whether pruning is performed.
         long-hint : |
-            Whether pruning is performed.  (See Weka specs for more).
+            Whether pruning is performed.  (See Weka specs for more, -U).
 
 	
     class_values :
