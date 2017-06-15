@@ -26,7 +26,7 @@ class Weka:
     ######################################### noqa
     VERSION = "0.0.1"
     GIT_URL = "https://github.com/mikacashman/Weka.git"
-    GIT_COMMIT_HASH = "434a79971120479a5061ad773207af0d8eed25e2"
+    GIT_COMMIT_HASH = "0d9f5f08bbcc32573f6b564231f15594e14e61dd"
 
     #BEGIN_CLASS_HEADER
     workspaceURL = None
@@ -179,7 +179,7 @@ class Weka:
 		call+=" -C " + str(params['confidenceFactor'])
 	if "minNumObj" in params and params['minNumObj'] is not None and params['minNumObj'] <> "2":
 		call+=" -M " + params['minNumObj']
-	if "seed" in params and params['seed'] is not None:
+	if "seed" in params and params['seed'] is not None and params['seed'] <> "1":
 		call+=" -s " + str(params['seed'])
 	if "numFolds" in params and params['numFolds'] is not None and params['numFolds'] <> "3":
 		call+=" -x " + str(params['numFolds'])
