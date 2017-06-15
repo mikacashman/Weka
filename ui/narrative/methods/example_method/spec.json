@@ -59,7 +59,7 @@
 	    "optional": true,
 	    "advanced": true,
 	    "allow_multiple": false,
-	    "default_values": [],
+	    "default_values": [1],
 	    "field_type": "text",
 	    "text_options": {
 		"valid_as": "int"
