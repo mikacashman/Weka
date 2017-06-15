@@ -79,7 +79,6 @@ parameters :
         long-hint : |
             Whether pruning is performed.  (See Weka specs for more, -U).
 
-	
     class_values :
         ui-name : |
             Class Values (numeric)
