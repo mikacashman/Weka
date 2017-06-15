@@ -63,14 +63,6 @@ parameters :
         long-hint : | 
             Determines the amount of data used for reduced-error pruning.  One fold is used for pruning, the rest for growing the tree. (See Weka specs for more).
 
-    reducedErrorPruning :
-        ui-name : | 
-            Reduced Error Pruning
-        short-hint : |  
-            Whether reduced-error pruning is used instead of C.4.5 pruning.
-        long-hint : | 
-            Whether reduced-error pruning is used instead of C.4.5 pruning.  (See Weka specs for more).
-    
     seed :
         ui-name : | 
             Seed

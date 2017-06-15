@@ -55,18 +55,6 @@
 	    }
 	},
 	{
-	    "id": "reducedErrorPruning",
-	    "optional": true,
-	    "advanced": true,
-	    "allow_multiple": false,
-	    "default_values": [false],
-	    "field_type": "checkbox",
-	    "checkbox_options": {
-		"checked_value": "1",
-		"unchecked_value": "0"
-	    }
-	},
-	{
 	    "id": "seed",
 	    "optional": true,
 	    "advanced": true,
@@ -138,10 +126,6 @@
 		{
 		    "input_parameter": "numFolds",
 		    "target_property": "numFolds"
-		},
-		{
-		    "input_parameter": "reducedErrorPruning",
-		    "target_property": "reducedErrorPruning"
 		},
 		{
 		    "input_parameter": "seed",

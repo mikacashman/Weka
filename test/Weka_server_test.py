@@ -107,16 +107,6 @@ class WekaTest(unittest.TestCase):
 		
 	self.assertTrue(self.compare_by_lines(oracle_path,report))
 
-
-    def test_DTAdvancedReducedPrune(self):
-	print
-	print("starting advanced test -R...")
-	ret = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1496165061369','phenotype_ref':'4965/10/1','reducedErrorPruning':1})
-	report = self.wsClient.get_objects([{'ref': ret[0]['report_ref']}])[0]['data']
-	oracle_path = self.cfg['scratch']+"/test_oracle/BTLabCLI-R.out"
-	
-	self.assertTrue(self.compare_by_lines(oracle_path,report))
-
     def test_DTAdvancedMinObj(self):
 	print
 	print("starting advanced test -M...")

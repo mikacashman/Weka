@@ -26,7 +26,7 @@ class Weka:
     ######################################### noqa
     VERSION = "0.0.1"
     GIT_URL = "https://github.com/mikacashman/Weka.git"
-    GIT_COMMIT_HASH = "0d9f5f08bbcc32573f6b564231f15594e14e61dd"
+    GIT_COMMIT_HASH = "434a79971120479a5061ad773207af0d8eed25e2"
 
     #BEGIN_CLASS_HEADER
     workspaceURL = None
@@ -77,7 +77,8 @@ class Weka:
 		class_labels=list(params['class_labels'].split(","))
 	if len(class_values) <> len(class_labels):
 		raise ValueError('Class Values and Class Labels must have equal length, each class seperated by a comma')
-	#STEP 2 - Get the input data
+	
+	### STEP 2 - Get the input data
 	token = ctx['token']
         wsClient = workspaceService(self.workspaceURL, token=token)
         try:
@@ -172,8 +173,6 @@ class Weka:
 	outfilename = self.scratch + "/weka.out"
 	call = "java weka.classifiers.trees.J48 -t " + wekafile + " -i > " + outfilename 
 	print(params)
-	if "reducedErrorPruning" in params and params['reducedErrorPruning'] is not None and params['reducedErrorPruning'] == 1:
-		call+=" -R"
 	if "unpruned" in params and params['unpruned'] is not None and params['unpruned'] == 1:
 		call+=" -U"	
 	if "confidenceFactor" in params and params['confidenceFactor'] is not None and params['confidenceFactor'] <> "0.25":
