@@ -6,6 +6,7 @@ import traceback
 import uuid
 from pprint import pprint, pformat
 from biokbase.workspace.client import Workspace as workspaceService
+from KBaseReport.KBaseReportClient import KBaseReport
 #END_HEADER
 
 
@@ -38,6 +39,9 @@ class Weka:
         #BEGIN_CONSTRUCTOR
 	self.workspaceURL = config['workspace-url']
 	self.scratch = config['scratch']
+	self.callbackURL = os.environ.get('SDK_CALLBACK_URL')
+        if self.callbackURL == None:
+            raise ValueError ("SDK_CALLBACK_URL not set in environment")
         #END_CONSTRUCTOR
         pass
 
@@ -59,6 +63,7 @@ class Weka:
         # return variables are: returnVal
         #BEGIN DecisionTree
         #runs J48 Deicison trees in weka on phenotype set
+	SERVICE_VER = 'dev'
 
         ### STEP 1 - Parse input and catch any errors
 	if 'workspace_name' not in params:
@@ -171,68 +176,88 @@ class Weka:
 	#Need to account for invalid settings
 	#	use Weka's built in - need to catch the Weka exception
 	outfilename = self.scratch + "/weka.out"
-	call = "java weka.classifiers.trees.J48 -t " + wekafile + " -i > " + outfilename 
 	print(params)
+	weka_params = ""
 	if "unpruned" in params and params['unpruned'] is not None and params['unpruned'] == 1:
-		call+=" -U"	
+		weka_params+=" -U"	
 	if "confidenceFactor" in params and params['confidenceFactor'] is not None and params['confidenceFactor'] <> "0.25":
-		call+=" -C " + str(params['confidenceFactor'])
+		weka_params+=" -C " + str(params['confidenceFactor'])
 	if "minNumObj" in params and params['minNumObj'] is not None and params['minNumObj'] <> "2":
-		call+=" -M " + params['minNumObj']
+		weka_params+=" -M " + params['minNumObj']
 	if "seed" in params and params['seed'] is not None and params['seed'] <> "1":
-		call+=" -s " + str(params['seed'])
+		weka_params+=" -s " + str(params['seed'])
 	if "numFolds" in params and params['numFolds'] is not None and params['numFolds'] <> "3":
-		call+=" -x " + str(params['numFolds'])
+		weka_params+=" -x " + str(params['numFolds'])
+	call = "java weka.classifiers.trees.J48 -t " + wekafile + weka_params + " -i > " + outfilename 
 	print("Weka call is: " + call)
+	call_graph = "java weka.classifiers.trees.J48 -g -t " + wekafile
 	try:
 		os.system(call)
+		tree = os.system(call_graph)
+		print(tree)
 	except:
 		print("EXCEPTION---------------------------------------")
 
         ### STEP 6 - Print tree result to report
-        outfile = open(outfilename,'r')
-	report = outfile.read()
-	#print(report)
+        #outfile = open(outfilename,'r')
+	#report = outfile.read()
+	#print(type(report))
+	
+	#print("\n".join(outfile.readlines()))
 		
-        reportObj = { 
-                'objects_created':[],
-                'text_message':report
-        }   
-        #save report
-        provenance = [{}]
-        if 'provenance' in ctx:
-                provenance = ctx['provenance']
-        # add additional info to provenance here, in this case the input data object reference
-        #provenance[0]['input_ws_objects']=[workspace_name+'/'+params['phenotype_ref']]
-        provenance[0]['input_ws_objects']=[params['phenotype_ref']]
-        report_info_list = None
-        try:
-                report_info_list = wsClient.save_objects({
-                        'workspace':workspace_name,
-                        'objects':[
-                        {   
-                                'type':'KBaseReport.Report',
-                                'data':reportObj,
-                                'name':'DT_report' + str(hex(uuid.getnode())),
-                                'meta':{},
-                                'hidden':1, # important!  make sure the report is hidden
-                                'provenance':provenance
-                        }   
-                        ]   
-                })  
-        except:
-                exc_type, exc_value, exc_traceback = sys.exc_info()
-                lines = traceback.format_exception(exc_type, exc_value, exc_traceback)
-                orig_error = ''.join('    ' + line for line in lines)
-                raise ValueError('Error saving Report object to workspace:\n' + orig_error)
-        report_info = report_info_list[0]
 
+	### STEP HTML - Save and HTML report
+	sp = '&nbsp;'
+        text_color = "#606060"
+        bar_color = "lightblue"
+        bar_width = 100
+        bar_char = "."
+        bar_fontsize = "-2"
+        row_spacing = "-2"
 
-        print('Ready to return')
+        html_report_lines = []
+        html_report_lines += ['<html>']
+        html_report_lines += ['<body bgcolor="white">']
+
+	html_report_lines += ['<p><b><font color="'+text_color+'">Weka J48 Decision Tree Results On '+str(pheno['name'])+'</font></b><br>'+"\n"]
+	with open(outfilename) as f: #this isn't right yet, can't get the newlines working
+		html_report_lines += f.readlines()
+	html_report_lines += ['<p>']
+        html_report_lines += ['</body>']
+        html_report_lines += ['</html>']
+
+	print("====HTML====")
+	print(html_report_lines)
+
+	#Test the new HTML report
+	report_file = self.scratch + "/report.html"
+	report_html = open(report_file,"w+")
+	report_html.write("\n".join(html_report_lines))
+	report_html.close()
+	
+	#save report
+	#NEW HTML
+        reportObj = {'objects_created': [], 
+                     #'text_message': '',  # or is it 'message'?
+                     'message': '',  # or is it 'text_message'?
+                     'direct_html': '',
+                     'direct_html_index': 0,
+                     'file_links': [],
+                     'html_links': [],
+                     'workspace_name': workspace_name,
+                     'report_object_name': "DTReport"
+	}	
+
+        reportObj['direct_html'] = "\n".join(html_report_lines)
+	
+	report = KBaseReport(self.callbackURL, token=ctx['token'], service_ver=SERVICE_VER)
+        report_info = report.create_extended_report(reportObj)
+        
+	print('Ready to return')
         returnVal = { 
-                'report_name':'DT_report',
-                'report_ref': str(report_info[6]) + '/' + str(report_info[0]) + '/' + str(report_info[4])
-        }   
+		'report_name': report_info['name'], 
+		'report_ref': report_info['ref'] 
+	}
 
         #END DecisionTree
 
