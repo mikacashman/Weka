@@ -4,7 +4,7 @@
 name: Decision Tree
 
 tooltip: |
-    Runs weka J48 classification tree algorithm on a phenotype set.  Results currently output to Report.
+    Runs weka J48 decison tree algorithm on a phenotype set.  Results currently output to Report.
     Currently assumes the base media is always the same, only additional compounds change.
     Request upgrades as needed.
 
@@ -18,14 +18,14 @@ icon: icon.png
 suggestions:
     apps:
         related:
-            [app1, app2]
+            []
         next:
-            [app3, app4]
+            []
     methods:
         related:
-            [method1, method2]
+            []
         next:
-            [method3, method4]
+            []
 
 #
 # Configure the display and description of parameters
@@ -33,11 +33,11 @@ suggestions:
 parameters :
     phenotype_ref :
         ui-name : |
-            Phenotype
+            PhenotypeSet
         short-hint : |
-            Phenotype with growth values
+            Phenotype with growth/class values
         long-hint  : |
-            Phenotype with growth values
+            Phenotype with growth/class values
 
     confidenceFactor :
         ui-name : | 
@@ -96,5 +96,14 @@ parameters :
            Text class labels of the numeric growth classes in the phenotype data set.
 
 description : |
-    <p>App runs Weka J48 decision tree classifier on a phenotype set.  Attributes are the media conditions and the classes are Growth Values.</p>
+    <p>This app runs Weka J48 decision tree classifier on a phenotype set.  A classification algorithm takes a set of data defined by attributes and a class value.  The class value is expected to be determined by the set of attributes.  A classifier works to define the class value based on attributes.  We use this algorithm to visualize data (not to predict new unseen data - though it can be used to do so).</p> 
 
+    <p>This app is useful to understand data large data sets with many attributes and a single class value.  The attributes could be: compounds in a media, genes expressed, temperature, pH, etc.  The class value should be some sort of phenotype: growth, physical structure, etc.  The decision tree will give you a visual representation of how the attributes affect the phenotype.</p>
+
+    <p><a href="https://appdev.kbase.us/narrative/ws.5119.obj.1" target="_blank">Tutorial for Weka Decision Tree App</a></p>
+
+publications :
+    -
+        display-text: |
+           M. Cashman, J. L. Catlett, M. B. Cohen, N. R. Buan, Z. Sakkaff, M. Pierobon, C. Kelley, BioSIMP: Using Software Testing Techniques for Sampling and Inference in Biological Organisms, ICSE International Workshop on Software Engineering for Science (SE4Science), May, 2017, pp. 2-8.
+        link: https://cse.unl.edu/~myra/artifacts/BioSIMP/BioSimp-preprint.pdf

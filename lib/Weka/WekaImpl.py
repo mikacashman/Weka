@@ -4,6 +4,7 @@ import os
 import sys
 import traceback
 import uuid
+import subprocess
 from pprint import pprint, pformat
 from biokbase.workspace.client import Workspace as workspaceService
 from KBaseReport.KBaseReportClient import KBaseReport
@@ -127,7 +128,7 @@ class Weka:
         ### STEP test - Print matrix to file
 	#this code is used for debugging to ensure the matrix is
 	#created properly
- 	#matfilename = self.scratch + "/matrix.txt"
+ 	#matfilename = self.scratch + "/work/matrix.txt"
 	#matrixfile = open(matfilename,"w+")
 	#for i in range(0,len(compounds)):
 	#	matrixfile.write(compounds[i] + " ")
@@ -141,7 +142,7 @@ class Weka:
 
         ### STEP 4 - Create ARFF file
 	#creates the .arff file which is input to Weka
- 	wekafile = self.scratch + "/weka.arff"
+ 	wekafile = self.scratch + "/work/weka.arff"
 	arff = open(wekafile,"w+")
 	arff.write("@RELATION J48DT_Phenotype\n\n")
 	for i in range(0,len(compounds)):
@@ -175,7 +176,7 @@ class Weka:
 	#Call weka with a different protocol?  os.system not recomeneded - what is?
 	#Need to account for invalid settings
 	#	use Weka's built in - need to catch the Weka exception
-	outfilename = self.scratch + "/weka.out"
+	outfilename = self.scratch + "/work/weka.out"
 	print(params)
 	weka_params = ""
 	if "unpruned" in params and params['unpruned'] is not None and params['unpruned'] == 1:
@@ -193,10 +194,30 @@ class Weka:
 	call_graph = "java weka.classifiers.trees.J48 -g -t " + wekafile
 	try:
 		os.system(call)
-		tree = os.system(call_graph)
-		print(tree)
+		#tree = os.system(call_graph)
+		#print(tree)
 	except:
 		print("EXCEPTION---------------------------------------")
+	#Save -g output as .dot file for input to dot
+	#tree = subprocess.check_output
+	#print(type(tree))
+	#print(tree)
+	dotfilename = self.scratch + "/work/weka.dot"
+	dotFile = open(dotfilename, 'w+')
+	print(dotfilename)
+	#dotFile.write(str(tree))
+	status = subprocess.call(call_graph,stdout=dotFile,shell=True)#shell=True is strongly discouraged...
+	dotFile.close()
+	#call dot
+	print("Calling dot")
+	graph_ofilename = self.scratch + "/data/Graph.png"
+	print(graph_ofilename)
+	if not os.path.exists(self.scratch+"/data"):
+		print("making new dir")
+		os.makedirs(self.scratch+"/data")
+	call_dot = "dot " + dotfilename + " -Tpng -o" + graph_ofilename 
+	os.system(call_dot)
+	print("dot called")
 
         ### STEP 6 - Print tree result to report
         #outfile = open(outfilename,'r')
@@ -220,6 +241,7 @@ class Weka:
         html_report_lines += ['<body bgcolor="white">']
 
 	html_report_lines += ['<p><b><font color="'+text_color+'">Weka J48 Decision Tree Results On '+str(pheno['name'])+'</font></b><br>'+"\n"]
+	html_report_lines += ['<img alt="Output Tree" src="Graph.png" />']
 	with open(outfilename) as f: #this isn't right yet, can't get the newlines working
 		html_report_lines += f.readlines()
 	html_report_lines += ['<p>']
@@ -230,7 +252,7 @@ class Weka:
 	print(html_report_lines)
 
 	#Test the new HTML report
-	report_file = self.scratch + "/report.html"
+	report_file = self.scratch + "/work/report.html"
 	report_html = open(report_file,"w+")
 	report_html.write("\n".join(html_report_lines))
 	report_html.close()

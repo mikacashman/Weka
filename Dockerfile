@@ -15,7 +15,9 @@ RUN pip install coverage
 #install Weka tools to run classification
 RUN apt-get -y install weka
 env CLASSPATH /usr/share/java/weka.jar:CLASSPATH
-
+#install graphviz to use dot to get png of tree
+RUN apt-get -y install graphviz
+	
 # update security libraries in the base image
 RUN pip install cffi --upgrade \
     && pip install pyopenssl --upgrade \
