@@ -66,6 +66,8 @@ class Weka:
         #runs J48 Deicison trees in weka on phenotype set
 	SERVICE_VER = 'dev'
 
+	print(self.callbackURL)
+
         ### STEP 1 - Parse input and catch any errors
 	if 'workspace_name' not in params:
                 raise ValueError('Parameter workspace is not set in input arguments')
