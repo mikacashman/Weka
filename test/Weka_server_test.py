@@ -34,7 +34,7 @@ class WekaTest(unittest.TestCase):
             cls.cfg[nameval[0]] = nameval[1]
         # Getting username from Auth profile for token
         authServiceUrl = cls.cfg['auth-service-url']
-        auth_client = _KBaseAuth(authServiceUrl)
+	auth_client = _KBaseAuth(authServiceUrl)
         user_id = auth_client.get_user(token)
         # WARNING: don't call any logging methods on the context object,
         # it'll result in a NoneType error
