@@ -162,7 +162,7 @@ class Weka:
 		try:
 			arff.write(classes[str(growth[i])] + '\n')
 		except:
-			raise ValueError('Class dictionary key error.  Can\'t find class label for ',growth[i])
+			raise ValueError('Class dictionary key error.  Can\'t find class label for ',growth[i],' Please check your Class Values and Class Labels mapping.')
 		
 	arff.close()
 		
