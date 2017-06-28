@@ -217,8 +217,13 @@ class Weka:
 	if not os.path.exists(self.scratch+"/data"):
 		print("making new dir")
 		os.makedirs(self.scratch+"/data")
+	else:
+		print("dir exists: ")
+		print(os.listdir(self.scratch))
+	print(os.listdir(self.scratch+"/data"))
 	call_dot = "dot " + dotfilename + " -Tpng -o" + graph_ofilename 
-	os.system(call_dot)
+	print(os.system(call_dot))
+	print(os.listdir(self.scratch+"/data"))
 	print("dot called")
 
         ### STEP 6 - Print tree result to report
