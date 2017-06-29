@@ -53,6 +53,14 @@ class WekaTest(unittest.TestCase):
         cls.scratch = cls.cfg['scratch']
         cls.callback_url = os.environ['SDK_CALLBACK_URL']
 
+	test_workspaece = 'mikaelacashman:narrative_1496165061369'
+	#param = {'id':'testSaveBTLab.pheno',
+	#	 'type':'KBasePhenotypes',
+	#	 'data':,
+	#	 'workspace':test_workspace
+	#	}	
+
+
     @classmethod
     def tearDownClass(cls):
         if hasattr(cls, 'wsName'):
