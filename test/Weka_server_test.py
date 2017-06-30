@@ -53,13 +53,15 @@ class WekaTest(unittest.TestCase):
         cls.scratch = cls.cfg['scratch']
         cls.callback_url = os.environ['SDK_CALLBACK_URL']
 
-	test_workspaece = 'mikaelacashman:narrative_1496165061369'
-	#param = {'id':'testSaveBTLab.pheno',
-	#	 'type':'KBasePhenotypes',
-	#	 'data':,
-	#	 'workspace':test_workspace
-	#	}	
-
+	test_workspace = 'mikaelacashman:narrative_1496165061369'
+	file_to_save = cls.scratch+"/test_data/BTPhenoLab.tsv"
+	print(file_to_save)
+	param = {'id':'testSaveBTLab.pheno',
+		 'type':'KBasePhenotypes.PhenotypeSet',
+		 'data':file_to_save,
+		 'workspace':test_workspace
+		}	
+	cls.wsClient.save_object(param)
 
     @classmethod
     def tearDownClass(cls):
