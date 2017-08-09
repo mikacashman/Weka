@@ -8,6 +8,7 @@ import subprocess
 from pprint import pprint, pformat
 from biokbase.workspace.client import Workspace as workspaceService
 from KBaseReport.KBaseReportClient import KBaseReport
+from Weka.Utils.ReportUtil import ReportUtil
 #END_HEADER
 
 
@@ -32,15 +33,34 @@ class Weka:
 
     #BEGIN_CLASS_HEADER
     workspaceURL = None
+    # Class variables and functions can be defined in this block
+
+    def _mkdir_p(self, path):
+        """
+        _mkdir_p: make directory for given path
+        """
+        if not path:
+            return
+        try:
+            os.makedirs(path)
+        except OSError as exc:
+            if exc.errno == errno.EEXIST and os.path.isdir(path):
+                pass
+            else:
+                raise
     #END_CLASS_HEADER
 
     # config contains contents of config file in a hash or None if it couldn't
     # be found
     def __init__(self, config):
         #BEGIN_CONSTRUCTOR
-	self.workspaceURL = config['workspace-url']
+	self.callbackURL = os.environ['SDK_CALLBACK_URL']
+        self.config = config
+        self.config['SDK_CALLBACK_URL'] = os.environ['SDK_CALLBACK_URL']
+        self.config['KB_AUTH_TOKEN'] = os.environ['KB_AUTH_TOKEN']
 	self.scratch = config['scratch']
-	self.callbackURL = os.environ.get('SDK_CALLBACK_URL')
+
+	self.workspaceURL = config['workspace-url']
         if self.callbackURL == None:
             raise ValueError ("SDK_CALLBACK_URL not set in environment")
         #END_CONSTRUCTOR
@@ -142,7 +162,7 @@ class Weka:
 
         ### STEP 4 - Create ARFF file
 	#creates the .arff file which is input to Weka
- 	wekafile = self.scratch + "/work/weka.arff"
+ 	wekafile = self.scratch + "/weka.arff"
 	arff = open(wekafile,"w+")
 	arff.write("@RELATION J48DT_Phenotype\n\n")
 	for i in range(0,len(compounds)):
@@ -176,7 +196,7 @@ class Weka:
 	#Call weka with a different protocol?  os.system not recomeneded - what is?
 	#Need to account for invalid settings
 	#	use Weka's built in - need to catch the Weka exception
-	outfilename = self.scratch + "/work/weka.out"
+	outfilename = self.scratch + "/weka.out"
 	print(params)
 	weka_params = ""
 	if "unpruned" in params and params['unpruned'] is not None and params['unpruned'] == 1:
@@ -202,19 +222,21 @@ class Weka:
 	#tree = subprocess.check_output
 	#print(type(tree))
 	#print(tree)
-	dotfilename = self.scratch + "/work/weka.dot"
+	dotfilename = self.scratch + "/weka.dot"
 	dotFile = open(dotfilename, 'w+')
 	print(dotfilename)
 	#dotFile.write(str(tree))
 	status = subprocess.call(call_graph,stdout=dotFile,shell=True)#shell=True is strongly discouraged...
 	dotFile.close()
+	
+	#Set up the report html
+	result_directory = os.path.join(self.scratch, str(uuid.uuid4()))
+        self._mkdir_p(result_directory)
+
 	#call dot
 	print("Calling dot")
-	graph_ofilename = self.scratch + "/data/Graph.png"
+	graph_ofilename = result_directory + "/Graph.png"
 	print(graph_ofilename)
-	if not os.path.exists(self.scratch+"/data"):
-		print("making new dir")
-		os.makedirs(self.scratch+"/data")
 	call_dot = "dot " + dotfilename + " -Tpng -o" + graph_ofilename 
 	os.system(call_dot)
 	print("dot called")
@@ -225,70 +247,53 @@ class Weka:
 	#print(type(report))
 	
 	#print("\n".join(outfile.readlines()))
-		
-
+	
+	#Create report_text
 	### STEP HTML - Save and HTML report
-	sp = '&nbsp;'
+        sp = '&nbsp;'
         text_color = "#606060"
         bar_color = "lightblue"
-        bar_width = 100
-        bar_char = "."
+        bar_width = 100 
+        bar_char = "." 
         bar_fontsize = "-2"
         row_spacing = "-2"
 
+	html_stats = []
         html_report_lines = []
         html_report_lines += ['<html>']
         html_report_lines += ['<body bgcolor="white">']
-
-	html_report_lines += ['<p><b><font color="'+text_color+'">Weka J48 Decision Tree Results On '+str(pheno['name'])+'</font></b><br>'+"\n"]
+	html_report_lines += ['<pre>']
+        html_report_lines += ['<p><b><font color="'+text_color+'">Weka J48 Decision Tree Results On '+str(pheno['name'])+'</font></b><br>'+"\n"]
 	html_report_lines += ['<img alt="Output Tree" src="Graph.png" />']
-	with open(outfilename) as f: #this isn't right yet, can't get the newlines working
-		html_report_lines += f.readlines()
-	html_report_lines += ['<p>']
+        with open(outfilename) as f: #this isn't right yet, can't get the newlines working
+                html_stats += f.readlines()
+        html_report_lines += ['</pre><p>']
         html_report_lines += ['</body>']
         html_report_lines += ['</html>']
 
-	print("====HTML====")
-	print(html_report_lines)
+        print("====HTML====")
+        print(html_report_lines)
 
-	#Test the new HTML report
-	report_file = self.scratch + "/work/report.html"
-	report_html = open(report_file,"w+")
-	report_html.write("\n".join(html_report_lines))
-	report_html.close()
-	
-	#save report
-	#NEW HTML
-        reportObj = {'objects_created': [], 
-                     #'text_message': '',  # or is it 'message'?
-                     'message': '',  # or is it 'text_message'?
-                     'direct_html': '',
-                     'direct_html_index': 0,
-                     'file_links': [],
-                     'html_links': [],
-                     'workspace_name': workspace_name,
-                     'report_object_name': "DTReport"
-	}	
+        #Test the new HTML report
+        report_file = self.scratch + "/report.html"
+        report_html = open(report_file,"w+")
+        report_html.write("\n".join(html_stats))
+        report_html.close()
 
-        reportObj['direct_html'] = "\n".join(html_report_lines)
+
+
 	
-	report = KBaseReport(self.callbackURL, token=ctx['token'], service_ver=SERVICE_VER)
-        report_info = report.create_extended_report(reportObj)
-        
-	print('Ready to return')
-        returnVal = { 
-		'report_name': report_info['name'], 
-		'report_ref': report_info['ref'] 
-	}
+        dummy_html_report_runner = ReportUtil(self.config)
+        output = dummy_html_report_runner._generate_report (params, result_directory, html_stats)
 
         #END DecisionTree
 
         # At some point might do deeper type checking...
-        if not isinstance(returnVal, dict):
-            raise ValueError('Method DecisionTree return value ' +
-                             'returnVal is not type dict as required.')
-        # return the results
-        return [returnVal]
+        if not isinstance(output, dict):
+            raise ValueError('Method filter_contigs return value ' +
+                             'output is not type dict as required.')
+	# return the results
+        return [output]
     def status(self, ctx):
         #BEGIN_STATUS
         returnVal = {'state': "OK",
