@@ -15,7 +15,6 @@ module Weka {
 		float  confidenceFactor;
 		int    minNumObj;
 		int    numFolds;
-		bool   reducedErrorPruning;
 		int    seed;
 		bool   unpruned;
 		string class_values;
