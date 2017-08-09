@@ -25,6 +25,6 @@ module Weka {
 		string report_ref;
 	}DTOutput;
 
-	funcdef DecisionTree(DTParams params) returns (DTOutput) authentication required;
+	funcdef DecisionTree(DTParams params) returns (DTOutput output) authentication required;
 
 };
