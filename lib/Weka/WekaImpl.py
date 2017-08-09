@@ -147,8 +147,15 @@ class Weka:
  	wekafile = self.scratch + "/work/weka.arff"
 	arff = open(wekafile,"w+")
 	arff.write("@RELATION J48DT_Phenotype\n\n")
+	
+	biochem_ref = "kbase/default"
+	biochem = wsClient.get_objects([{'ref': biochem_ref}])[0]['data']
+	print(type(biochem))
+	compound_name_dict={}
+	for cpd in biochem['compounds']:
+        	compound_name_dict[cpd['id']]=cpd['name']
 	for i in range(0,len(compounds)):
-		arff.write("@ATTRIBUTE " + compounds[i][-8:] + " {ON,OFF}\n")
+		arff.write("@ATTRIBUTE " + compound_name_dict[compounds[i][-8:]] + " {ON,OFF}\n")
 	arff.write("@ATTRIBUTE class {")
 	count=len(classes)
 	temp=0
