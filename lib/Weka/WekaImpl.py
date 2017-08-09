@@ -258,6 +258,7 @@ class Weka:
         bar_fontsize = "-2"
         row_spacing = "-2"
 
+	html_stats = []
         html_report_lines = []
         html_report_lines += ['<html>']
         html_report_lines += ['<body bgcolor="white">']
@@ -265,7 +266,7 @@ class Weka:
         html_report_lines += ['<p><b><font color="'+text_color+'">Weka J48 Decision Tree Results On '+str(pheno['name'])+'</font></b><br>'+"\n"]
 	html_report_lines += ['<img alt="Output Tree" src="Graph.png" />']
         with open(outfilename) as f: #this isn't right yet, can't get the newlines working
-                html_report_lines += f.readlines()
+                html_stats += f.readlines()
         html_report_lines += ['</pre><p>']
         html_report_lines += ['</body>']
         html_report_lines += ['</html>']
@@ -276,14 +277,14 @@ class Weka:
         #Test the new HTML report
         report_file = self.scratch + "/report.html"
         report_html = open(report_file,"w+")
-        report_html.write("\n".join(html_report_lines))
+        report_html.write("\n".join(html_stats))
         report_html.close()
 
 
 
 	
         dummy_html_report_runner = ReportUtil(self.config)
-        output = dummy_html_report_runner._generate_report (params, result_directory, html_report_lines)
+        output = dummy_html_report_runner._generate_report (params, result_directory, html_stats)
 
         #END DecisionTree
 

@@ -63,13 +63,13 @@ class ReportUtil:
 	
 
         with open(result_file_path, 'w') as result_file:
-            #with open(os.path.join(os.path.dirname(__file__), 'report_template.html'),
-                      #'r') as report_template_file:
-                #report_template = report_template_file.read()
-                #report_template = report_template.replace('<p>Overview_Content</p>',
-                #                                          overview_content)
-            result_file.write(overview_content)
-
+            with open(os.path.join(os.path.dirname(__file__), 'report_template.html'),
+                      'r') as report_template_file:
+                report_template = report_template_file.read()
+                report_template = report_template.replace('Overview_Content',
+                                                          overview_content)
+            	#result_file.write(overview_content)
+		result_file.write(report_template)
 	
 
         report_shock_id = self.dfu.file_to_shock({'file_path': output_directory,
