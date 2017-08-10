@@ -59,13 +59,10 @@ class Weka:
         self.config['SDK_CALLBACK_URL'] = os.environ['SDK_CALLBACK_URL']
         self.config['KB_AUTH_TOKEN'] = os.environ['KB_AUTH_TOKEN']
 	self.scratch = config['scratch']
-
 	self.workspaceURL = config['workspace-url']
         if self.callbackURL == None:
             raise ValueError ("SDK_CALLBACK_URL not set in environment")
         #END_CONSTRUCTOR
-        pass
-
 
     def DecisionTree(self, ctx, params):
         """
@@ -184,18 +181,21 @@ class Weka:
 			elif phenos[i][j] == 0:
 				arff.write("OFF,")
 			else:
-				raise ValueError('Error: Invalid compound in phenos associated with phenotype.  Must be a 1 (for ON) or 0 (for OFF).')
+				raise ValueError('Error: Invalid compound in phenos associated \ 
+					with phenotype.  Must be a 1 (for ON) or 0 (for OFF).')
 		try:
 			arff.write(classes[str(growth[i])] + '\n')
 		except:
-			raise ValueError('Class dictionary key error.  Can\'t find class label for ',growth[i],' Please check your Class Values and Class Labels mapping.')
-		
+			raise ValueError('Class dictionary key error. \  
+					Can\'t find class label for ',
+					growth[i],
+					' Please check your Class Values and Class Labels mapping.')
 	arff.close()
 		
         ### STEP 5 - Send to WEKA
 	#Call weka with a different protocol?  os.system not recomeneded - what is?
 	#Need to account for invalid settings
-	#	use Weka's built in - need to catch the Weka exception
+	#TODO use Weka's built in - need to catch the Weka exception
 	outfilename = self.scratch + "/weka.out"
 	print(params)
 	weka_params = ""
@@ -214,18 +214,12 @@ class Weka:
 	call_graph = "java weka.classifiers.trees.J48 -g -t " + wekafile
 	try:
 		os.system(call)
-		#tree = os.system(call_graph)
-		#print(tree)
 	except:
 		print("EXCEPTION---------------------------------------")
 	#Save -g output as .dot file for input to dot
-	#tree = subprocess.check_output
-	#print(type(tree))
-	#print(tree)
 	dotfilename = self.scratch + "/weka.dot"
 	dotFile = open(dotfilename, 'w+')
 	print(dotfilename)
-	#dotFile.write(str(tree))
 	status = subprocess.call(call_graph,stdout=dotFile,shell=True)#shell=True is strongly discouraged...
 	dotFile.close()
 	
@@ -241,51 +235,18 @@ class Weka:
 	os.system(call_dot)
 	print("dot called")
 
-        ### STEP 6 - Print tree result to report
-        #outfile = open(outfilename,'r')
-	#report = outfile.read()
-	#print(type(report))
-	
-	#print("\n".join(outfile.readlines()))
-	
-	#Create report_text
-	### STEP HTML - Save and HTML report
-        sp = '&nbsp;'
-        text_color = "#606060"
-        bar_color = "lightblue"
-        bar_width = 100 
-        bar_char = "." 
-        bar_fontsize = "-2"
-        row_spacing = "-2"
-
+	### STEP 5 - Save and HTML report
 	html_stats = []
-        html_report_lines = []
-        html_report_lines += ['<html>']
-        html_report_lines += ['<body bgcolor="white">']
-	html_report_lines += ['<pre>']
-        html_report_lines += ['<p><b><font color="'+text_color+'">Weka J48 Decision Tree Results On '+str(pheno['name'])+'</font></b><br>'+"\n"]
-	html_report_lines += ['<img alt="Output Tree" src="Graph.png" />']
-        with open(outfilename) as f: #this isn't right yet, can't get the newlines working
+        with open(outfilename) as f:
                 html_stats += f.readlines()
-        html_report_lines += ['</pre><p>']
-        html_report_lines += ['</body>']
-        html_report_lines += ['</html>']
-
-        print("====HTML====")
-        print(html_report_lines)
-
         #Test the new HTML report
         report_file = self.scratch + "/report.html"
         report_html = open(report_file,"w+")
         report_html.write("\n".join(html_stats))
         report_html.close()
 
-
-
-	
         dummy_html_report_runner = ReportUtil(self.config)
         output = dummy_html_report_runner._generate_report (params, result_directory, html_stats)
-
         #END DecisionTree
 
         # At some point might do deeper type checking...
