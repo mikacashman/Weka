@@ -83,14 +83,7 @@ class Weka:
         #runs J48 Deicison trees in weka on phenotype set
 	SERVICE_VER = 'dev'
 
-	### STEP 0 - Set up biochem data to get cpd name from ID
-	biochem_ref= "kbase/default"
-	biochem = wsClient.get_objects([{'ref':biochem_ref}])[0]['data']
-	compound_name_dict={}
-	for cpd in biochem['compounds']:
-		compound_name_dict[cpd['id']]=cpd['name']	
-
-        ### STEP 1 - Parse input and catch any errors
+	        ### STEP 1 - Parse input and catch any errors
 	if 'workspace_name' not in params:
                 raise ValueError('Parameter workspace is not set in input arguments')
         workspace_name = params['workspace_name']
@@ -119,6 +112,14 @@ class Weka:
                 orig_error = ''.join('   ' + line for line in lines)
                 raise ValueError('Error loading original Phenotype object from workspace:\n' + orig_error)
 	classes = dict(zip(class_values,class_labels))
+
+	### STEP 2.5 - Set up biochem data to get cpd name from ID
+	biochem_ref= "kbase/default"
+	biochem = wsClient.get_objects([{'ref':biochem_ref}])[0]['data']
+	compound_name_dict={}
+	for cpd in biochem['compounds']:
+		compound_name_dict[cpd['id']]=cpd['name']	
+
 
         ### STEP 3 - Create Matrix
 	#currently assumed the base media is the same for all phenotypes,
@@ -170,7 +171,7 @@ class Weka:
 	arff = open(wekafile,"w+")
 	arff.write("@RELATION J48DT_Phenotype\n\n")
 	for i in range(0,len(compounds)):
-		arff.write("@ATTRIBUTE " + compound_name_dict[compounds[i][-8:]] + " {ON,OFF}\n")
+		arff.write("@ATTRIBUTE " + compound_name_dict[compounds[i][-8:]].replace(" ","_") + " {ON,OFF}\n")
 		#arff.write("@ATTRIBUTE " + compounds[i][-8:] + " {ON,OFF}\n")
 	arff.write("@ATTRIBUTE class {")
 	count=len(classes)
@@ -189,13 +190,11 @@ class Weka:
 			elif phenos[i][j] == 0:
 				arff.write("OFF,")
 			else:
-				raise ValueError('Error: Invalid compound in phenos associated \ 
-					with phenotype.  Must be a 1 (for ON) or 0 (for OFF).')
+				raise ValueError("Error: Invalid compound in phenos associated with phenotype.  Must be a 1 (for ON) or 0 (for OFF).")
 		try:
 			arff.write(classes[str(growth[i])] + '\n')
 		except:
-			raise ValueError('Class dictionary key error. \  
-					Can\'t find class label for ',
+			raise ValueError('Class dictionary key error. Can\'t find class label for ',
 					growth[i],
 					' Please check your Class Values and Class Labels mapping.')
 	arff.close()
