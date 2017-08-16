@@ -101,93 +101,92 @@ class WekaTest(unittest.TestCase):
 
 	print
         print("starting test...")
+	print(self.cfg['scratch'])
 	ret = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1496165061369','phenotype_ref':'4965/10/1'})
-	report = self.wsClient.get_objects([{'ref': ret[0]['report_ref']}])[0]['data']
-	oracle_path = self.cfg['scratch'] + "/test_oracle/BTLabCLI.out"
-	pass
-	#self.assertTrue(self.compare_by_lines(oracle_path,report))
+	oracle_path = self.cfg['scratch'] + "/../test_oracle/BTLabCLI.out"
+	report_path = self.cfg['scratch'] + "/weka.out"
+	self.assertTrue(self.compare_by_lines(oracle_path,report_path))
 
 
-    def est_DTAdvancedUnPruned(self):
+    def test_DTAdvancedUnPruned(self):
 	print
 	print("starting advanced test -U...")
 	ret = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1496165061369','phenotype_ref':'4965/10/1','unpruned':1})
-	report = self.wsClient.get_objects([{'ref': ret[0]['report_ref']}])[0]['data']
-	oracle_path = self.cfg['scratch']+"/test_oracle/BTLabCLI-U.out"
-		
-	self.assertTrue(self.compare_by_lines(oracle_path,report))
+	oracle_path = self.cfg['scratch']+"/../test_oracle/BTLabCLI-U.out"
+	report_path = self.cfg['scratch'] + "/weka.out"
+        self.assertTrue(self.compare_by_lines(oracle_path,report_path))	
 
-    def est_DTAdvancedMinObj(self):
+    def test_DTAdvancedMinObj(self):
 	print
 	print("starting advanced test -M...")
 	ret = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1496165061369','phenotype_ref':'4965/10/1','minNumObj':'10'})
-	report = self.wsClient.get_objects([{'ref': ret[0]['report_ref']}])[0]['data']
-	oracle_path = self.cfg['scratch']+"/test_oracle/BTLabCLI-M.out"
+	oracle_path = self.cfg['scratch']+"/../test_oracle/BTLabCLI-M.out"
+	report_path = self.cfg['scratch'] + "/weka.out"
+        self.assertTrue(self.compare_by_lines(oracle_path,report_path))
 
-	self.assertTrue(self.compare_by_lines(oracle_path,report))
-
-    def est_DTcustomClasses(self):
+    def test_DTcustomClasses(self):
 	print
 	print("starting custom classes test...")
 	ret = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1496165061369','phenotype_ref':'4965/13/1','class_values':"1,2,3",'class_labels':"LOW,MED,HIGH"})
-	report = self.wsClient.get_objects([{'ref': ret[0]['report_ref']}])[0]['data']
-	oracle_path = self.cfg['scratch']+"/test_oracle/BTKBaseCLI-custclass.out"
+	oracle_path = self.cfg['scratch']+"/../test_oracle/BTKBaseCLI-custclass.out"
+	report_path = self.cfg['scratch'] + "/weka.out"
+        self.assertTrue(self.compare_by_lines(oracle_path,report_path))
 
-	self.assertTrue(self.compare_by_lines(oracle_path,report))
-
-    def est_DTAdvnacedConf(self):
+    def test_DTAdvnacedConf(self):
 	print
 	print("starting advanced test -C...")
 	ret = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1496165061369','phenotype_ref':'4965/10/1','confidenceFactor':.1})
-	report = self.wsClient.get_objects([{'ref': ret[0]['report_ref']}])[0]['data']
-	oracle_path = self.cfg['scratch']+"/test_oracle/BTLabCLI-C.out"
-
-	self.assertTrue(self.compare_by_lines(oracle_path,report))
+	oracle_path = self.cfg['scratch']+"/../test_oracle/BTLabCLI-C.out"
+	report_path = self.cfg['scratch'] + "/weka.out"
+        self.assertTrue(self.compare_by_lines(oracle_path,report_path))
     
-    def est_Fail(self):
+    def test_Fail(self):
 	print
 	print("starting advanced test -C Fail...")
 	ret = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1496165061369','phenotype_ref':'4965/10/1','confidenceFactor':0.1})
-	report = self.wsClient.get_objects([{'ref': ret[0]['report_ref']}])[0]['data']
-	oracle_path = self.cfg['scratch']+"/test_oracle/BTLabCLI-C.fail.out"
+	oracle_path = self.cfg['scratch']+"/../test_oracle/BTLabCLI-C.fail.out"
+	report_path = self.cfg['scratch'] + "/weka.out"
+        self.assertTrue(self.compare_by_lines(oracle_path,report_path))
 
-	self.assertFalse(self.compare_by_lines(oracle_path,report))
-
-    def est_SeedPass(self):
+    def test_SeedPass(self):
 	print
 	print("starting seed test Pass...")
+	report_path = self.cfg['scratch']+"/weka.out"		
+
 	ret = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1496165061369','phenotype_ref':'4965/10/1','seed':100})
+	reportFile = open(report_path,"r").read()
+	
 	ret2 = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1496165061369','phenotype_ref':'4965/10/1','seed':100})
-	report = self.wsClient.get_objects([{'ref': ret[0]['report_ref']}])[0]['data']
-	report2= self.wsClient.get_objects([{'ref': ret2[0]['report_ref']}])[0]['data']
-	result = report['text_message']
-	result2= report2['text_message']	
-	resultReplaced = re.sub("[0-9]+\.[0-9]+ seconds","seconds",result)
-	result2Replaced = re.sub("[0-9]+\.[0-9]+ seconds","seconds",result2)
+	reportFile2 = open(report_path,"r").read()
+	
+	resultReplaced = re.sub("[0-9]+\.[0-9]+ seconds","seconds",reportFile)
+	result2Replaced = re.sub("[0-9]+\.[0-9]+ seconds","seconds",reportFile2)
 	
 	self.assertTrue(resultReplaced == result2Replaced)
 
-    def est_SeedFail(self):
+    def test_SeedFail(self):
 	print
 	print("starting seed test Fail...")
+	report_path = self.cfg['scratch'] + "/weka.out"
+	
 	ret = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1496165061369','phenotype_ref':'4965/10/1'})#default seed is 1
+	reportFile = open(report_path,"r").read()
+
 	ret2 = self.getImpl().DecisionTree(self.getContext(),{'workspace_name':'mikaelacashman:narrative_1496165061369','phenotype_ref':'4965/10/1','seed':42})
-	report = self.wsClient.get_objects([{'ref': ret[0]['report_ref']}])[0]['data']
-	report2= self.wsClient.get_objects([{'ref': ret2[0]['report_ref']}])[0]['data']
-	result = report['text_message']
-	result2= report2['text_message']	
-	resultReplaced = re.sub("[0-9]+\.[0-9]+ seconds","seconds",result)
-	result2Replaced = re.sub("[0-9]+\.[0-9]+ seconds","seconds",result2)
+	reportFile2 = open(report_path,"r").read()
+
+	resultReplaced = re.sub("[0-9]+\.[0-9]+ seconds","seconds",reportFile)
+	result2Replaced = re.sub("[0-9]+\.[0-9]+ seconds","seconds",reportFile2)
 	
 	self.assertFalse(resultReplaced == result2Replaced)
 
-    def compare_by_lines(self,oracle_path,test_report):
+    def compare_by_lines(self,oracle_path,result_path):
 	#get strings
 	oracleFile = open(oracle_path,"r").read()
-	result = test_report['text_message']
+	resultFile = open(result_path,"r").read()
 	#remove variable time element
 	oracleFileReplaced = re.sub("[0-9]+\.[0-9]+ seconds","seconds",oracleFile)
-	resultReplaced = re.sub("[0-9]+\.[0-9]+ seconds","seconds",result)
+	resultReplaced = re.sub("[0-9]+\.[0-9]+ seconds","seconds",resultFile)
 	#split into lists for easy compare
 	oracleFileSplit = oracleFileReplaced.splitlines()
 	resultSplit = resultReplaced.splitlines()

@@ -120,7 +120,6 @@ class Weka:
 	for cpd in biochem['compounds']:
 		compound_name_dict[cpd['id']]=cpd['name']	
 
-
         ### STEP 3 - Create Matrix
 	#currently assumed the base media is the same for all phenotypes,
 	#this should be updated later to allow more flexibility.

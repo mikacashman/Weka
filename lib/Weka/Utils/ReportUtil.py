@@ -58,9 +58,8 @@ class ReportUtil:
         shutil.copy2(os.path.join(result_directory, 'Graph.png'),
                      os.path.join(output_directory, 'Graph.png'))
 	
-	print("\n".join(report_text))
+	#print("\n".join(report_text))
         overview_content = "\n".join(report_text) 
-	
 
         with open(result_file_path, 'w') as result_file:
             with open(os.path.join(os.path.dirname(__file__), 'report_template.html'),

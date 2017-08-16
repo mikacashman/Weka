@@ -1,12 +1,10 @@
 #
 # define display information
 #
-name: Decision Tree
+name: Classify PhenotypeSet with Decision Tree
 
 tooltip: |
-    Runs weka J48 decison tree algorithm on a phenotype set.  Results currently output to Report.
-    Currently assumes the base media is always the same, only additional compounds change.
-    Request upgrades as needed.
+    Builds a decision tree in order to classify results of a phenotype set.    
 
 screenshots: []
 
@@ -43,7 +41,6 @@ parameters :
         ui-name : | 
             Confidence Factor
         short-hint : | 
-            The confidence factor used for pruning (smaller values incur more pruning).
         long-hint : | 
             The confidence factor used for pruning (smaller values incur more pruning).  (See Weka specs for more, command -C).
 
@@ -51,7 +48,6 @@ parameters :
         ui-name : | 
             Min Num Obj
         short-hint : | 
-            The minimum number of instances per leaf.
         long-hint : |   
             The minimum number of instances per leaf.  (See Weka specs for more, command -M).
     
@@ -59,7 +55,6 @@ parameters :
         ui-name : | 
             Num Folds
         short-hint : | 
-            Sets the number of folds for cross-validation.
         long-hint : | 
             Sets the number of folds for cross-validation. (See Weka specs for more, command -x).
 
@@ -67,7 +62,6 @@ parameters :
         ui-name : | 
             Seed
         short-hint : | 
-            Sets the random number seed for cross-validation.
         long-hint : | 
             Sets the random number seed for cross-validation.  (See Weka specs for more, command -s).
     
@@ -75,7 +69,6 @@ parameters :
         ui-name : | 
             Unpruned
         short-hint : | 
-            Whether pruning is performed.
         long-hint : |
             Whether pruning is performed.  (See Weka specs for more, -U).
 
@@ -83,7 +76,6 @@ parameters :
         ui-name : |
             Class Values (numeric)
         short-hint : |
-            Numeric values of the growth of the phenotypes.  Text class will match below.
         long-hint : |
             Numeric values of the growth column of the phenotype data set.  Each will map to a specific text class listed below.
 
@@ -91,16 +83,24 @@ parameters :
         ui-name : |
            Class Labels (text)
         short-hint : |
-           Text class labels of growth classes.  Match to numeric classes above.
         ling-hint : |
            Text class labels of the numeric growth classes in the phenotype data set.
 
 description : |
-    <p>This app runs Weka J48 decision tree classifier on a phenotype set.  A classification algorithm takes a set of data defined by attributes and a class value.  The class value is expected to be determined by the set of attributes.  A classifier works to define the class value based on attributes.  We use this algorithm to visualize data (not to predict new unseen data - though it can be used to do so).</p> 
+    <p>This app runs the Weka J48 decision tree classifier on a phenotype set.  A classification algorithm takes a set of data defined by attributes and a class value.  The class value is expected to be determined by the set of attributes.  A classifier works to define the class value based on attributes.  We use this algorithm to visualize data (not to predict new unseen data - though it can be used to do so).</p> 
 
-    <p>This app is useful to understand data large data sets with many attributes and a single class value.  The attributes could be: compounds in a media, genes expressed, temperature, pH, etc.  The class value should be some sort of phenotype: growth, physical structure, etc.  The decision tree will give you a visual representation of how the attributes affect the phenotype.</p>
+    <p>This app is useful to understand data large data sets with many attributes and a single class value.  This app is currently set up where the attributes are compounds in a media.  The class value should be some sort of phenotype: growth, physical structure, etc.  The decision tree will give you a visual representation of how the attributes affect the phenotype.</p>
+
+    <p>Begin by selecting the PhenotypeSet you desire to classify.  This PhenotypeSet should have the base media the same for all Phenotypes, contain additional compounds (these are your attributes), and a discrete Phenotype class that is set in the "nomalizedGrowth" column.  If you phenotype is growth/no_growth than you may use the default settings.  Otherwise, defined the mapping between your discrete set of values and the name of the phenotype (i.e. {1,2,3} => {GREEN,RED,BLUE}).</p>
+
+    <p>Once complete you will recieve a visual depiction of the decision tree in one tab, and statistics on the other.  In the visual tree each leaf node will have numbers in parenthesis.  The first number represents how many phenotypes fit this leaf, and the second is how many (of the first value) at this leaf were misclassified (don't match the phnotype specified at the node).<\p>
+
+    <p>For more imformation please see <a href="http://www.cs.waikato.ac.nz/ml/weka/documentation.html">Weka documentation</a>.</p>
 
     <p><a href="https://appdev.kbase.us/narrative/ws.5119.obj.1" target="_blank">Tutorial for Weka Decision Tree App</a></p>
+
+    <p><strong>Team members who developed & deployed algorithm in KBase:</strong>
+    Mikaela Cashman, ???. For questions, <a href="mailto:help@kbase.us">e-mail help@kbase.us</a></p>
 
 publications :
     -
