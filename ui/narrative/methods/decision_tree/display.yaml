@@ -43,50 +43,43 @@ parameters :
     confidenceFactor :
         ui-name : | 
             Confidence Factor
-        short-hint : | 
         long-hint : | 
             The confidence factor used for pruning (smaller values incur more pruning).  (See Weka specs for more, command -C).
 
     minNumObj :
         ui-name : | 
             Min Num Obj
-        short-hint : | 
         long-hint : |   
             The minimum number of instances per leaf.  (See Weka specs for more, command -M).
     
     numFolds :
         ui-name : | 
             Num Folds
-        short-hint : | 
         long-hint : | 
             Sets the number of folds for cross-validation. (See Weka specs for more, command -x).
 
     seed :
         ui-name : | 
             Seed
-        short-hint : | 
         long-hint : | 
             Sets the random number seed for cross-validation.  (See Weka specs for more, command -s).
     
     unpruned :
         ui-name : | 
             Unpruned
-        short-hint : | 
         long-hint : |
             Whether pruning is performed.  (See Weka specs for more, -U).
 
     class_values :
         ui-name : |
             Class Values (numeric)
-        short-hint : |
         long-hint : |
             Numeric values of the growth column of the phenotype data set.  Each will map to a specific text class listed below.
 
     class_labels : 
         ui-name : |
            Class Labels (text)
-        short-hint : |
-        ling-hint : |
+        long-hint : |
            Text class labels of the numeric growth classes in the phenotype data set.
 
 description : |
