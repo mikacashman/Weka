@@ -1,0 +1,56 @@
+language: python
+sudo: required
+services:
+- docker
+notifications:
+  email:
+    recipients:
+    - mikaela.cashman@gmail.com
+    on_success: never
+    on_failure: always
+env:
+  global:
+    secure: XwRnNsUV4WZDUsmuw0H09WzPw5wZW3h+f/IY8P1VVgHh7P7GygRC9GOHo1gYtETHwWQ0/wVlP7Pj09Q3RSZgWMBYCBFB/lWJxyBumzQD3sGKpY8awPJMEW4MyPY30wtneQn/xNvQDnWsW9sz2pWdZcBvrFKx4QDpl+G2iRZmZwPWXC5FyRWeH0vdAwEJRiPd/I5BlGWvkoYatC4V32azJMRESDnjbwPzoteHwMv8zMEzzseih/andGb1wqmchDc5N29QlqvSowOOnkc+eV1APzwBjPq1n0oxPwFmNyCEMD9v8/VZmxitCZrdixRBqyfupbYErXrOEucxSfeJZCZObv45FhnXHOqfG49TlewH+t4uzF6I9GkCMXj3PXxNiFnJ3Plxx8aYCnsjRvDU2XGsSAA+78AlSTskzsu/kTad/TPljthfhDIMQU3EwHrf4NdiNQe2nhDk5dukb5c6nXs7QfozqYbLpbYSn2ns4KDA8myIU54iRRkfjUPh/1KtkaOm3f60+EhXNqiqukUuYhybalXLIokOlmSP7rpkdF69fLS1+afba6/08D/Fc76lHXO5kzlyEKOvIeM/OEapknY070kpPPhJwtO2+xj1xdJRYXINYMGbxG/vadnAIwlkdk/k3vTFpBAOh3+RAILZ9Kmjpg5Ov1v614V4V12BgBZwCEA=
+branches:
+  only:
+  - master
+before_install:
+- docker version
+- python --version
+- javac -version
+- java -version
+install:
+- pip install coveralls
+- git clone https://github.com/kbase/jars
+- git clone https://github.com/kbase/kb_sdk
+- cd kb_sdk
+- make
+- make sdkbase
+- docker images
+- export PATH=$(pwd)/bin:$PATH
+- cd ../
+- git clone https://github.com/mikacashman/Weka.git
+- cd Weka
+- kb-sdk test || true
+- sed -i "s/test_token=/test_token=$TEST_TOKEN/" test_local/test.cfg
+- sed -i 's\https://appdev.kbase.us/services\https://ci.kbase.us/services\' test_local/test.cfg
+- sed -i 's\https://appdev.kbase.us/services/auth/api/legacy/KBase/Sessions/Login\https://ci.kbase.us/services/auth/api/legacy/KBase/Sessions/Login\'
+  test_local/test.cfg
+- sed -i 's/$(id -u)/0:0/' test_local/run_tests.sh
+- pwd=$(pwd)
+- echo "#!/bin/bash" >> test_local/run_subjob.sh
+- echo -e "$pwd/test_local/run_docker.sh run --rm --user 0:0 -v $pwd/test_local/subjobs/\$1/workdir:/kb/module/work
+  -v $pwd/test_local/workdir/tmp:/kb/module/work/tmp \$4 -e \"SDK_CALLBACK_URL=\$3\"
+  \$2 async" >> test_local/run_subjob.sh
+- cat test_local/run_subjob.sh
+script:
+- kb-sdk test
+after_success:
+- cp test_local/workdir/.coverage .
+- sudo mkdir -p /kb/module/lib/
+- sudo cp -R test_local/workdir/kb/module/lib/Weka /kb/module/lib/
+- pwd
+- ls -l /kb/module/lib/Weka
+- cat .coverage
+- coverage report -m
+- coveralls
