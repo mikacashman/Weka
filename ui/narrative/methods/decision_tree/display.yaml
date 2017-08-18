@@ -4,9 +4,12 @@
 name: Classify PhenotypeSet with Decision Tree
 
 tooltip: |
-    Builds a decision tree in order to classify results of a phenotype set.    
+    Build a decision tree in order to classify results of a phenotype set.    
 
-screenshots: []
+screenshots:
+    - Input.png
+    - OutputVisualization.png
+    - OutputStatistics.png
 
 icon: icon.png
 
