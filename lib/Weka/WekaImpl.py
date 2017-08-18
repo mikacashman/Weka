@@ -29,7 +29,7 @@ class Weka:
     ######################################### noqa
     VERSION = "0.0.1"
     GIT_URL = "https://github.com/mikacashman/Weka.git"
-    GIT_COMMIT_HASH = "0d9f5f08bbcc32573f6b564231f15594e14e61dd"
+    GIT_COMMIT_HASH = "badbf5652d2cbf8427109c4c79f2e91a07f55d61"
 
     #BEGIN_CLASS_HEADER
     workspaceURL = None
@@ -63,22 +63,22 @@ class Weka:
         if self.callbackURL == None:
             raise ValueError ("SDK_CALLBACK_URL not set in environment")
         #END_CONSTRUCTOR
+        pass
+
 
     def DecisionTree(self, ctx, params):
         """
         :param params: instance of type "DTParams" -> structure: parameter
            "workspace_name" of String, parameter "phenotype_ref" of String,
            parameter "confidenceFactor" of Double, parameter "minNumObj" of
-           Long, parameter "numFolds" of Long, parameter
-           "reducedErrorPruning" of type "bool" (A binary boolean), parameter
-           "seed" of Long, parameter "unpruned" of type "bool" (A binary
-           boolean), parameter "class_values" of String, parameter
-           "class_labels" of String
+           Long, parameter "numFolds" of Long, parameter "seed" of Long,
+           parameter "unpruned" of type "bool" (A binary boolean), parameter
+           "class_values" of String, parameter "class_labels" of String
         :returns: instance of type "DTOutput" -> structure: parameter
            "report_name" of String, parameter "report_ref" of String
         """
         # ctx is the context object
-        # return variables are: returnVal
+        # return variables are: output
         #BEGIN DecisionTree
         #runs J48 Deicison trees in weka on phenotype set
 	SERVICE_VER = 'dev'
@@ -257,9 +257,9 @@ class Weka:
 
         # At some point might do deeper type checking...
         if not isinstance(output, dict):
-            raise ValueError('Method filter_contigs return value ' +
+            raise ValueError('Method DecisionTree return value ' +
                              'output is not type dict as required.')
-	# return the results
+        # return the results
         return [output]
     def status(self, ctx):
         #BEGIN_STATUS

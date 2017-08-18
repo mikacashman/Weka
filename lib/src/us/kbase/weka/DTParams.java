@@ -24,7 +24,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "confidenceFactor",
     "minNumObj",
     "numFolds",
-    "reducedErrorPruning",
     "seed",
     "unpruned",
     "class_values",
@@ -42,8 +41,6 @@ public class DTParams {
     private Long minNumObj;
     @JsonProperty("numFolds")
     private Long numFolds;
-    @JsonProperty("reducedErrorPruning")
-    private Long reducedErrorPruning;
     @JsonProperty("seed")
     private Long seed;
     @JsonProperty("unpruned")
@@ -129,21 +126,6 @@ public class DTParams {
         return this;
     }
 
-    @JsonProperty("reducedErrorPruning")
-    public Long getReducedErrorPruning() {
-        return reducedErrorPruning;
-    }
-
-    @JsonProperty("reducedErrorPruning")
-    public void setReducedErrorPruning(Long reducedErrorPruning) {
-        this.reducedErrorPruning = reducedErrorPruning;
-    }
-
-    public DTParams withReducedErrorPruning(Long reducedErrorPruning) {
-        this.reducedErrorPruning = reducedErrorPruning;
-        return this;
-    }
-
     @JsonProperty("seed")
     public Long getSeed() {
         return seed;
@@ -216,7 +198,7 @@ public class DTParams {
 
     @Override
     public String toString() {
-        return ((((((((((((((((((((((("DTParams"+" [workspaceName=")+ workspaceName)+", phenotypeRef=")+ phenotypeRef)+", confidenceFactor=")+ confidenceFactor)+", minNumObj=")+ minNumObj)+", numFolds=")+ numFolds)+", reducedErrorPruning=")+ reducedErrorPruning)+", seed=")+ seed)+", unpruned=")+ unpruned)+", classValues=")+ classValues)+", classLabels=")+ classLabels)+", additionalProperties=")+ additionalProperties)+"]");
+        return ((((((((((((((((((((("DTParams"+" [workspaceName=")+ workspaceName)+", phenotypeRef=")+ phenotypeRef)+", confidenceFactor=")+ confidenceFactor)+", minNumObj=")+ minNumObj)+", numFolds=")+ numFolds)+", seed=")+ seed)+", unpruned=")+ unpruned)+", classValues=")+ classValues)+", classLabels=")+ classLabels)+", additionalProperties=")+ additionalProperties)+"]");
     }
 
 }

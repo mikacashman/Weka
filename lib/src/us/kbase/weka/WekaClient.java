@@ -167,7 +167,7 @@ public class WekaClient {
      * <pre>
      * </pre>
      * @param   params   instance of type {@link us.kbase.weka.DTParams DTParams}
-     * @return   instance of type {@link us.kbase.weka.DTOutput DTOutput}
+     * @return   parameter "output" of type {@link us.kbase.weka.DTOutput DTOutput}
      * @throws IOException if an IO exception occurs
      * @throws JsonClientException if a JSON RPC exception occurs
      */

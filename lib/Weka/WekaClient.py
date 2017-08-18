@@ -38,11 +38,9 @@ class Weka(object):
         :param params: instance of type "DTParams" -> structure: parameter
            "workspace_name" of String, parameter "phenotype_ref" of String,
            parameter "confidenceFactor" of Double, parameter "minNumObj" of
-           Long, parameter "numFolds" of Long, parameter
-           "reducedErrorPruning" of type "bool" (A binary boolean), parameter
-           "seed" of Long, parameter "unpruned" of type "bool" (A binary
-           boolean), parameter "class_values" of String, parameter
-           "class_labels" of String
+           Long, parameter "numFolds" of Long, parameter "seed" of Long,
+           parameter "unpruned" of type "bool" (A binary boolean), parameter
+           "class_values" of String, parameter "class_labels" of String
         :returns: instance of type "DTOutput" -> structure: parameter
            "report_name" of String, parameter "report_ref" of String
         """

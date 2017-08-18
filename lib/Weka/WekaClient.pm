@@ -110,7 +110,7 @@ sub new
 
 =head2 DecisionTree
 
-  $return = $obj->DecisionTree($params)
+  $output = $obj->DecisionTree($params)
 
 =over 4
 
@@ -120,14 +120,13 @@ sub new
 
 <pre>
 $params is a Weka.DTParams
-$return is a Weka.DTOutput
+$output is a Weka.DTOutput
 DTParams is a reference to a hash where the following keys are defined:
 	workspace_name has a value which is a string
 	phenotype_ref has a value which is a string
 	confidenceFactor has a value which is a float
 	minNumObj has a value which is an int
 	numFolds has a value which is an int
-	reducedErrorPruning has a value which is a Weka.bool
 	seed has a value which is an int
 	unpruned has a value which is a Weka.bool
 	class_values has a value which is a string
@@ -144,14 +143,13 @@ DTOutput is a reference to a hash where the following keys are defined:
 =begin text
 
 $params is a Weka.DTParams
-$return is a Weka.DTOutput
+$output is a Weka.DTOutput
 DTParams is a reference to a hash where the following keys are defined:
 	workspace_name has a value which is a string
 	phenotype_ref has a value which is a string
 	confidenceFactor has a value which is a float
 	minNumObj has a value which is an int
 	numFolds has a value which is an int
-	reducedErrorPruning has a value which is a Weka.bool
 	seed has a value which is an int
 	unpruned has a value which is a Weka.bool
 	class_values has a value which is a string
@@ -355,7 +353,6 @@ phenotype_ref has a value which is a string
 confidenceFactor has a value which is a float
 minNumObj has a value which is an int
 numFolds has a value which is an int
-reducedErrorPruning has a value which is a Weka.bool
 seed has a value which is an int
 unpruned has a value which is a Weka.bool
 class_values has a value which is a string
@@ -373,7 +370,6 @@ phenotype_ref has a value which is a string
 confidenceFactor has a value which is a float
 minNumObj has a value which is an int
 numFolds has a value which is an int
-reducedErrorPruning has a value which is a Weka.bool
 seed has a value which is an int
 unpruned has a value which is a Weka.bool
 class_values has a value which is a string
