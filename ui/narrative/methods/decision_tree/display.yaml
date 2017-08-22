@@ -87,7 +87,7 @@ description : |
 
     <p>This app is useful to understand data large data sets with many attributes and a single class value.  This app is currently set up where the attributes are compounds in a media.  The class value should be some sort of phenotype: growth, physical structure, etc.  The decision tree will give you a visual representation of how the attributes affect the phenotype.</p>
 
-    <p>Begin by selecting the PhenotypeSet you desire to classify.  This PhenotypeSet should have the base media the same for all Phenotypes, contain additional compounds (these are your attributes), and a discrete Phenotype class that is set in the "nomalizedGrowth" column.  If you phenotype is growth/no_growth than you may use the default settings.  Otherwise, defined the mapping between your discrete set of values and the name of the phenotype (i.e. {1,2,3} => {GREEN,RED,BLUE}).</p>
+    <p>Begin by selecting the PhenotypeSet you desire to classify.  This PhenotypeSet should have the base media the same for all Phenotypes, contain additional compounds (these are your attributes), and a discrete Phenotype class that is set in the "nomalizedGrowth" column.  If the phenotype is growth/no_growth than you may use the default settings.  Otherwise, defined the mapping between your discrete set of values and the name of the phenotype (i.e. {1,2,3} => {GREEN,RED,BLUE}).</p>
 
     <p>Once complete you will recieve a visual depiction of the decision tree in one tab, and statistics on the other.  In the visual tree each leaf node will have numbers in parenthesis.  The first number represents how many phenotypes fit this leaf, and the second is how many (of the first value) at this leaf were misclassified (don't match the phnotype specified at the node).<\p>
 
