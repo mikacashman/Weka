@@ -89,16 +89,6 @@ class WekaTest(unittest.TestCase):
    
     # NOTE: According to Python unittest naming rules test method names should start from 'test'. # noqa
     def test_DecisionTree(self):
-        # Prepare test objects in workspace if needed using
-        # self.getWsClient().save_objects({'workspace': self.getWsName(),
-        #                                  'objects': []})
-        #
-        # Run your method by
-        # ret = self.getImpl().your_method(self.getContext(), parameters...)
-        #
-        # Check returned data with
-        # self.assertEqual(ret[...], ...) or other unittest methods
-
 	print
         print("starting test...")
 	print(self.cfg['scratch'])
@@ -106,7 +96,6 @@ class WekaTest(unittest.TestCase):
 	oracle_path = self.cfg['scratch'] + "/../test_oracle/BTLabCLI.out"
 	report_path = self.cfg['scratch'] + "/weka.out"
 	self.assertTrue(self.compare_by_lines(oracle_path,report_path))
-
 
     def test_DTAdvancedUnPruned(self):
 	print
