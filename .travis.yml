@@ -44,7 +44,7 @@ install:
   \$2 async" >> test_local/run_subjob.sh
 - cat test_local/run_subjob.sh
 script:
-- kb-sdk test
+- kb-sdk validate
 after_success:
 - cp test_local/workdir/.coverage .
 - sudo mkdir -p /kb/module/lib/
