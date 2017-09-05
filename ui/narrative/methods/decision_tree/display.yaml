@@ -44,31 +44,31 @@ parameters :
         ui-name : | 
             Confidence Factor
         short-hint : | 
-            The confidence factor used for pruning (smaller values incur more pruning).  (See Weka specs for more, command -C).
+            The confidence factor used for pruning (smaller values incur more pruning).  (See <a href="http://weka.sourceforge.net/doc.dev/weka/classifiers/trees/J48.html"J48 specs</a> for more, command -C).
 
     minNumObj :
         ui-name : | 
             Min Num Obj
         short-hint : |   
-            The minimum number of instances per leaf.  (See Weka specs for more, command -M).
+            The minimum number of instances per leaf.  (See <a href="http://weka.sourceforge.net/doc.dev/weka/classifiers/trees/J48.html"J48 specs</a> for more, command -M).
     
     numFolds :
         ui-name : | 
             Num Folds
         short-hint : | 
-            Sets the number of folds for cross-validation. (See Weka specs for more, command -x).
+            Sets the number of folds for cross-validation. (See <a href="http://www.cs.waikato.ac.nz/~remco/weka_bn/node13.html"Weka specs</a> for more, command -x).
 
     seed :
         ui-name : | 
             Seed
         short-hint : | 
-            Sets the random number seed for cross-validation.  (See Weka specs for more, command -s).
+            Sets the random number seed for cross-validation.  (See <a href="http://www.cs.waikato.ac.nz/~remco/weka_bn/node13.html"Weka specs</a> for more, command -s).
     
     unpruned :
         ui-name : | 
             Unpruned
         short-hint : |
-            Whether pruning is performed.  (See Weka specs for more, -U).
+            Whether pruning is performed.  (See <a href="http://weka.sourceforge.net/doc.dev/weka/classifiers/trees/J48.html"J48 specs</a> for more, -U).
 
     class_values :
         ui-name : |
@@ -83,23 +83,26 @@ parameters :
            Text class labels of the numeric growth classes in the phenotype data set.
 
 description : |
-    <p>This app runs the Weka J48 decision tree classifier on a phenotype set.  A classification algorithm takes a set of data defined by attributes and a class value.  The class value is expected to be determined by the set of attributes.  A classifier works to define the class value based on attributes.  We use this algorithm to visualize data (not to predict new unseen data - though it can be used to do so).</p> 
+    <p>This app runs the Weka J48 decision tree classifier on a <a href="https://appdev.kbase.us/#spec/type/KBasePhenotypes.PhenotypeSet"> phenotype set</a>.  A classification algorithm takes a set of data defined by attributes and a class value.  The class value is expected to be determined by the set of attributes.  A classifier works to define the class value based on attributes.  We use this algorithm to visualize data (not to predict new unseen data - though it can be used to do so).</p> 
 
     <p>This app is useful to understand data large data sets with many attributes and a single class value.  This app is currently set up where the attributes are compounds in a media.  The class value should be some sort of phenotype: growth, physical structure, etc.  The decision tree will give you a visual representation of how the attributes affect the phenotype.</p>
 
     <p>Begin by selecting the PhenotypeSet you desire to classify.  This PhenotypeSet should have the base media the same for all Phenotypes, contain additional compounds (these are your attributes), and a discrete Phenotype class that is set in the "nomalizedGrowth" column.  If the phenotype is growth/no_growth than you may use the default settings.  Otherwise, defined the mapping between your discrete set of values and the name of the phenotype (i.e. {1,2,3} => {GREEN,RED,BLUE}).</p>
 
-    <p>Once complete you will recieve a visual depiction of the decision tree in one tab, and statistics on the other.  In the visual tree each leaf node will have numbers in parenthesis.  The first number represents how many phenotypes fit this leaf, and the second is how many (of the first value) at this leaf were misclassified (don't match the phnotype specified at the node).<\p>
+    <p>Once complete you will recieve a visual depiction of the decision tree in one tab, and statistics in the other.  In the visual tree each leaf node will have numbers in parenthesis.  The first number represents how many phenotypes fit this leaf, and the second is how many (of the first value) at this leaf were misclassified (don't match the phenotype specified at the node).</p>
 
     <p>For more imformation please see <a href="http://www.cs.waikato.ac.nz/ml/weka/documentation.html">Weka documentation</a>.</p>
 
-    <p><a href="https://appdev.kbase.us/narrative/ws.5119.obj.1" target="_blank">Tutorial for Weka Decision Tree App</a></p>
+    <p>Please also view the <a href="https://appdev.kbase.us/narrative/ws.5119.obj.1" target="_blank">Tutorial for Weka Decision Tree App</a></p>
 
     <p><strong>Team members who developed & deployed algorithm in KBase:</strong>
-    Mikaela Cashman, ???. For questions, <a href="mailto:help@kbase.us">e-mail help@kbase.us</a></p>
+    Mikaela Cashman, Myra Cohen. For questions, <a href="mailto:help@kbase.us">e-mail help@kbase.us</a></p>
+
+    <p>Acknowledgments - We would like to thank the KBase team for their support in development, special thanks to: Priya Ranjan, Meghan Drake, Robert Cottingham, Ben Allen, and Miriam Land.</p>
 
 publications :
     -
         display-text: |
            M. Cashman, J. L. Catlett, M. B. Cohen, N. R. Buan, Z. Sakkaff, M. Pierobon, C. Kelley, BioSIMP: Using Software Testing Techniques for Sampling and Inference in Biological Organisms, ICSE International Workshop on Software Engineering for Science (SE4Science), May, 2017, pp. 2-8.
         link: https://cse.unl.edu/~myra/artifacts/BioSIMP/BioSimp-preprint.pdf
+	   Eibe Frank, Mark A. Hall, and Ian H. Witten (2016). The WEKA Workbench. Online Appendix for "Data Mining: Practical Machine Learning Tools and Techniques", Morgan Kaufmann, Fourth Edition, 2016.
