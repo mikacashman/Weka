@@ -91,7 +91,7 @@ description : |
 
     <p>Once complete you will recieve a visual depiction of the decision tree in one tab, and statistics in the other.  In the visual tree each leaf node will have numbers in parenthesis.  The first number represents how many phenotypes fit this leaf, and the second is how many (of the first value) at this leaf were misclassified (don't match the phenotype specified at the node).</p>
 
-    <p>For more imformation please see <a href="http://www.cs.waikato.ac.nz/ml/weka/documentation.html">Weka documentation</a>.</p>
+    <p>For more imformation please see <a href="http://www.cs.waikato.ac.nz/ml/weka/documentation.html">Weka documentation</a>, <a href="http://weka.sourceforge.net/doc.dev/weka/classifiers/trees/J48.html"> J48 specs</a>, <a href="http://www.cs.waikato.ac.nz/~remco/weka_bn/node13.html"> Weka specs</a>.</p>
 
     <p>Please also view the <a href="https://appdev.kbase.us/narrative/ws.5119.obj.1" target="_blank">Tutorial for Weka Decision Tree App</a></p>
 
