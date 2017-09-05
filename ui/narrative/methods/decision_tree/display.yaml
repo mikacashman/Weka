@@ -105,4 +105,6 @@ publications :
         display-text: |
            M. Cashman, J. L. Catlett, M. B. Cohen, N. R. Buan, Z. Sakkaff, M. Pierobon, C. Kelley, BioSIMP: Using Software Testing Techniques for Sampling and Inference in Biological Organisms, ICSE International Workshop on Software Engineering for Science (SE4Science), May, 2017, pp. 2-8.
         link: https://cse.unl.edu/~myra/artifacts/BioSIMP/BioSimp-preprint.pdf
-	   Eibe Frank, Mark A. Hall, and Ian H. Witten (2016). The WEKA Workbench. Online Appendix for "Data Mining: Practical Machine Learning Tools and Techniques", Morgan Kaufmann, Fourth Edition, 2016.
+    -
+        display-text: |	   
+           Eibe Frank, Mark A. Hall, and Ian H. Witten (2016). The WEKA Workbench. Online Appendix for "Data Mining: Practical Machine Learning Tools and Techniques", Morgan Kaufmann, Fourth Edition, 2016.
