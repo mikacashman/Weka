@@ -44,31 +44,31 @@ parameters :
         ui-name : | 
             Confidence Factor
         short-hint : | 
-            The confidence factor used for pruning (smaller values incur more pruning).  (See <a href="http://weka.sourceforge.net/doc.dev/weka/classifiers/trees/J48.html"J48 specs</a> for more, command -C).
+            The confidence factor used for pruning (smaller values incur more pruning).  (See <a href="http://weka.sourceforge.net/doc.dev/weka/classifiers/trees/J48.html"> J48 specs</a> for more, command -C).
 
     minNumObj :
         ui-name : | 
             Min Num Obj
         short-hint : |   
-            The minimum number of instances per leaf.  (See <a href="http://weka.sourceforge.net/doc.dev/weka/classifiers/trees/J48.html"J48 specs</a> for more, command -M).
+            The minimum number of instances per leaf.  (See <a href="http://weka.sourceforge.net/doc.dev/weka/classifiers/trees/J48.html"> J48 specs</a> for more, command -M).
     
     numFolds :
         ui-name : | 
             Num Folds
         short-hint : | 
-            Sets the number of folds for cross-validation. (See <a href="http://www.cs.waikato.ac.nz/~remco/weka_bn/node13.html"Weka specs</a> for more, command -x).
+            Sets the number of folds for cross-validation. (See <a href="http://www.cs.waikato.ac.nz/~remco/weka_bn/node13.html"> Weka specs</a> for more, command -x).
 
     seed :
         ui-name : | 
             Seed
         short-hint : | 
-            Sets the random number seed for cross-validation.  (See <a href="http://www.cs.waikato.ac.nz/~remco/weka_bn/node13.html"Weka specs</a> for more, command -s).
+            Sets the random number seed for cross-validation.  (See <a href="http://www.cs.waikato.ac.nz/~remco/weka_bn/node13.html"> Weka specs</a> for more, command -s).
     
     unpruned :
         ui-name : | 
             Unpruned
         short-hint : |
-            Whether pruning is performed.  (See <a href="http://weka.sourceforge.net/doc.dev/weka/classifiers/trees/J48.html"J48 specs</a> for more, -U).
+            Whether pruning is performed.  (See <a href="http://weka.sourceforge.net/doc.dev/weka/classifiers/trees/J48.html"> J48 specs</a> for more, command -U).
 
     class_values :
         ui-name : |
@@ -96,7 +96,7 @@ description : |
     <p>Please also view the <a href="https://appdev.kbase.us/narrative/ws.5119.obj.1" target="_blank">Tutorial for Weka Decision Tree App</a></p>
 
     <p><strong>Team members who developed & deployed algorithm in KBase:</strong>
-    Mikaela Cashman, Myra Cohen. For questions, <a href="mailto:help@kbase.us">e-mail help@kbase.us</a></p>
+    Mikaela Cashman and Myra Cohen. For questions, <a href="mailto:help@kbase.us">e-mail help@kbase.us</a></p>
 
     <p>Acknowledgments - We would like to thank the KBase team for their support in development, special thanks to: Priya Ranjan, Meghan Drake, Robert Cottingham, Ben Allen, and Miriam Land.</p>
 
