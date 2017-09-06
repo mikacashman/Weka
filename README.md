@@ -1,7 +1,5 @@
 Build status:
 
-master: [![Coverage Status](https://coveralls.io/repos/github/mikacashman/Weka/badge.svg?branch=master)](https://coveralls.io/github/mikacashman/Weka?branch=master)
-
 master:  [![Build Status](https://travis-ci.org/mikacashman/Weka.svg?branch=master)](https://travis-ci.org/mikacashman/Weka)
 
 # Weka
