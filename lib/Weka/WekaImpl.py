@@ -224,14 +224,16 @@ class Weka:
         call = "java weka.classifiers.trees.J48 -t " + wekafile + weka_params \
             + " -i > " + outfilename
         print("Weka call is: " + call)
-        call_graph = "java weka.classifiers.trees.J48 -g -t " + wekafile
         try:
                 os.system(call)
         except:
                 print("EXCEPTION---------------------------------------")
+        
+        #Call weka again with graph output
         #Save -g output as .dot file for input to dot
         dotfilename = self.scratch + "/weka.dot"
         dotFile = open(dotfilename, 'w+')
+        call_graph = "java weka.classifiers.trees.J48 -g -t " + wekafile + weka_params
         print(dotfilename)
         #BELOW - shell=True is strongly discouraged...
         try:
@@ -239,6 +241,7 @@ class Weka:
         except:
             print("EXCEPTION---------------------------------------")
         dotFile.close()
+        #test print graph results
         tempFile = open(dotfilename, 'r')
         print(tempFile.read())
         tempFile.close()
