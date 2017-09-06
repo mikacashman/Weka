@@ -238,8 +238,10 @@ class Weka:
             subprocess.call(call_graph, stdout=dotFile, shell=True)
         except:
             print("EXCEPTION---------------------------------------")
-        print(dotFile.read())
         dotFile.close()
+        tempFile = open(dotfilename, 'r')
+        print(tempFile.read())
+        tempFile.close()
 
         #Set up the report html
         result_directory = os.path.join(self.scratch, str(uuid.uuid4()))
