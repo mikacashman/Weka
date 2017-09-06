@@ -234,7 +234,11 @@ class Weka:
         dotFile = open(dotfilename, 'w+')
         print(dotfilename)
         #BELOW - shell=True is strongly discouraged...
-        subprocess.call(call_graph, stdout=dotFile, shell=True)
+        try:
+            subprocess.call(call_graph, stdout=dotFile, shell=True)
+        except:
+            print("EXCEPTION---------------------------------------")
+        print(dotFile.read())
         dotFile.close()
 
         #Set up the report html
