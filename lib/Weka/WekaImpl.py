@@ -27,7 +27,7 @@ class Weka:
     # state. A method could easily clobber the state set by another while
     # the latter method is running.
     ######################################### noqa
-    VERSION = "0.0.1"
+    VERSION = "1.0.0"
     GIT_URL = "https://github.com/mikacashman/Weka.git"
     GIT_COMMIT_HASH = "badbf5652d2cbf8427109c4c79f2e91a07f55d61"
 
@@ -228,7 +228,7 @@ class Weka:
                 os.system(call)
         except:
                 print("EXCEPTION---------------------------------------")
-        
+
         #Call weka again with graph output
         #Save -g output as .dot file for input to dot
         dotfilename = self.scratch + "/weka.dot"
