@@ -3,8 +3,8 @@
     "authors": [
         "mikaelacashman"
     ],
-    "contact": "",
-    "categories": ["active"],
+    "contact": "http://kbase.us/contact-us",
+    "categories": ["active", "comparative_genomics"],
     "widgets": {
         "input": null,
         "output": "no-display"
