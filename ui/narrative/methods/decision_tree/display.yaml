@@ -4,7 +4,7 @@
 name: Classify PhenotypeSet with Decision Tree
 
 tooltip: |
-    Build a decision tree in order to classify results of a phenotype set.    
+    Build a decision tree in order to classify results of a phenotype set.
 
 screenshots:
     - Input.png
@@ -41,31 +41,31 @@ parameters :
             Phenotype with growth/class values
 
     confidenceFactor :
-        ui-name : | 
+        ui-name : |
             Confidence Factor
-        short-hint : | 
+        short-hint : |
             The confidence factor used for pruning (smaller values incur more pruning).  (See J48 specs for more, command -C).
 
     minNumObj :
-        ui-name : | 
+        ui-name : |
             Min Num Obj
-        short-hint : |   
+        short-hint : |
             The minimum number of instances per leaf.  (See J48 specs for more, command -M).
-    
+
     numFolds :
-        ui-name : | 
+        ui-name : |
             Num Folds
-        short-hint : | 
+        short-hint : |
             Sets the number of folds for cross-validation. (See Weka specs for more, command -x).
 
     seed :
-        ui-name : | 
+        ui-name : |
             Seed
-        short-hint : | 
+        short-hint : |
             Sets the random number seed for cross-validation.  (See Weka specs for more, command -s).
-    
+
     unpruned :
-        ui-name : | 
+        ui-name : |
             Unpruned
         short-hint : |
             Whether pruning is performed.  (See J48 specs for more, command -U).
@@ -76,14 +76,14 @@ parameters :
         short-hint : |
             Numeric values of the growth column of the phenotype data set.  Each will map to a specific text class listed below.
 
-    class_labels : 
+    class_labels :
         ui-name : |
            Class Labels (text)
         short-hint : |
            Text class labels of the numeric growth classes in the phenotype data set.
 
 description : |
-    <p>This app runs the Weka J48 decision tree classifier on a <a href="https://appdev.kbase.us/#spec/type/KBasePhenotypes.PhenotypeSet"> phenotype set</a>.  A classification algorithm takes a set of data defined by attributes and a class value.  The class value is expected to be determined by the set of attributes.  A classifier works to define the class value based on attributes.  We use this algorithm to visualize data (not to predict new unseen data - though it can be used to do so).</p> 
+    <p>This app runs the Weka J48 decision tree classifier on a <a href="https://appdev.kbase.us/#spec/type/KBasePhenotypes.PhenotypeSet"> phenotype set</a>.  A classification algorithm takes a set of data defined by attributes and a class value.  The class value is expected to be determined by the set of attributes.  A classifier works to define the class value based on attributes.  We use this algorithm to visualize data (not to predict new unseen data - though it can be used to do so).</p>
 
     <p>This app is useful to understand data large data sets with many attributes and a single class value.  This app is currently set up where the attributes are compounds in a media.  The class value should be some sort of phenotype: growth, physical structure, etc.  The decision tree will give you a visual representation of how the attributes affect the phenotype.</p>
 
@@ -103,8 +103,9 @@ description : |
 publications :
     -
         display-text: |
-           M. Cashman, J. L. Catlett, M. B. Cohen, N. R. Buan, Z. Sakkaff, M. Pierobon, C. Kelley, BioSIMP: Using Software Testing Techniques for Sampling and Inference in Biological Organisms, ICSE International Workshop on Software Engineering for Science (SE4Science), May, 2017, pp. 2-8.
+            Cashman M, Catlett JL, Cohen MB, Buan NR, Sakkaff Z, Pierobon M, et al. BioSIMP: Using Software Testing Techniques for Sampling and Inference in Biological Organisms. 2017 IEEE/ACM 12th International Workshop on Software Engineering for Science (SE4Science). Buenos Aires, Argentina: IEEE; 2017. pp. 2–8. doi:10.1109/SE4Science.2017.9
         link: https://cse.unl.edu/~myra/artifacts/BioSIMP/BioSimp-preprint.pdf
+        
     -
-        display-text: |	   
-           Eibe Frank, Mark A. Hall, and Ian H. Witten (2016). The WEKA Workbench. Online Appendix for "Data Mining: Practical Machine Learning Tools and Techniques", Morgan Kaufmann, Fourth Edition, 2016.
+        display-text: |
+            Witten IH, Frank E, Hall MA, Pal CJ. The WEKA Workbench. Online Appendix for "Data Mining, Fourth Edition: Practical Machine Learning Tools and Techniques". 4th ed. San Francisco, CA, USA: Morgan Kaufmann Publishers Inc.; 2016.
