@@ -1,5 +1,5 @@
-FROM kbase/kbase:sdkbase.latest
-MAINTAINER KBase Developer
+FROM kbase/sdkbase2:latest
+MAINTAINER 3rdParty Developer
 # -----------------------------------------
 # In this section, you can install any system dependencies required
 # to run your App.  For instance, you could place an apt-get update or
@@ -13,10 +13,11 @@ MAINTAINER KBase Developer
 
 RUN pip install coverage
 #install Weka tools to run classification
-RUN apt-get -y install weka
+RUN apt-get update && \
+    apt-get -y install weka && \
+    apt-get -y install graphviz
 env CLASSPATH /usr/share/java/weka.jar:CLASSPATH
 #install graphviz to use dot to get png of tree
-RUN apt-get -y install graphviz
 	
 # update security libraries in the base image
 RUN pip install cffi --upgrade \
@@ -24,7 +25,8 @@ RUN pip install cffi --upgrade \
     && pip install ndg-httpsclient --upgrade \
     && pip install pyasn1 --upgrade \
     && pip install requests --upgrade \
-    && pip install 'requests[security]' --upgrade
+    && pip install 'requests[security]' --upgrade \
+    && pip install configparser 
 
 # -----------------------------------------
 

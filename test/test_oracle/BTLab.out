@@ -1,0 +1,67 @@
+
+J48 pruned tree
+------------------
+: GROWTH (93.0/46.0)
+
+Number of Leaves  : 	1
+
+Size of the tree : 	1
+
+
+Time taken to build model: 0.01 seconds
+Time taken to test model on training data: 0 seconds
+
+=== Error on training data ===
+
+Correctly Classified Instances          47               50.5376 %
+Incorrectly Classified Instances        46               49.4624 %
+Kappa statistic                          0     
+Mean absolute error                      0.4999
+Root mean squared error                  0.5   
+Relative absolute error                 99.9998 %
+Root relative squared error            100      %
+Total Number of Instances               93     
+
+
+=== Detailed Accuracy By Class ===
+
+               TP Rate   FP Rate   Precision   Recall  F-Measure   ROC Area  Class
+                 1         1          0.505     1         0.671      0.5      GROWTH
+                 0         0          0         0         0          0.5      NO_GROWTH
+Weighted Avg.    0.505     0.505      0.255     0.505     0.339      0.5  
+
+
+=== Confusion Matrix ===
+
+  a  b   <-- classified as
+ 47  0 |  a = GROWTH
+ 46  0 |  b = NO_GROWTH
+
+
+
+=== Stratified cross-validation ===
+
+Correctly Classified Instances          47               50.5376 %
+Incorrectly Classified Instances        46               49.4624 %
+Kappa statistic                          0
+Mean absolute error                      0.5004
+Root mean squared error                  0.5004
+Relative absolute error                100.0018 %
+Root relative squared error            100.0023 %
+Total Number of Instances               93
+
+
+=== Detailed Accuracy By Class ===
+
+               TP Rate   FP Rate   Precision   Recall  F-Measure   ROC Area  Class
+                 1         1          0.505     1         0.671      0.451    GROWTH
+                 0         0          0         0         0          0.451    NO_GROWTH
+Weighted Avg.    0.505     0.505      0.255     0.505     0.339      0.451
+
+
+=== Confusion Matrix ===
+
+  a  b   <-- classified as
+ 47  0 |  a = GROWTH
+ 46  0 |  b = NO_GROWTH
+
