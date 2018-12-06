@@ -91,14 +91,10 @@ description : |
 
     <p>Once complete you will recieve a visual depiction of the decision tree in one tab, and statistics in the other.  In the visual tree each leaf node will have numbers in parenthesis.  The first number represents how many phenotypes fit this leaf, and the second is how many (of the first value) at this leaf were misclassified (don't match the phenotype specified at the node).</p>
 
-    <p>For more imformation please see <a href="http://www.cs.waikato.ac.nz/ml/weka/documentation.html">Weka documentation</a>, <a href="http://weka.sourceforge.net/doc.dev/weka/classifiers/trees/J48.html"> J48 specs</a>, <a href="http://www.cs.waikato.ac.nz/~remco/weka_bn/node13.html"> Weka specs</a>.</p>
-
-    <p>Please also view the <a href="https://appdev.kbase.us/narrative/ws.5119.obj.1" target="_blank">Tutorial for Weka Decision Tree App</a></p>
-
     <p><strong>Team members who developed & deployed algorithm in KBase:</strong>
-    Mikaela Cashman and Myra Cohen. For questions, <a href="mailto:help@kbase.us">e-mail help@kbase.us</a></p>
+    Mikaela Cashman and Myra Cohen. For questions, please go to http://kbase.us/contact-us.
 
-    <p>Acknowledgments - We would like to thank the KBase team for their support in development, special thanks to: Priya Ranjan, Meghan Drake, Robert Cottingham, Ben Allen, and Miriam Land.</p>
+    <p>Acknowledgments - The developers would like to thank the KBase team for their support in development, special thanks to: Priya Ranjan, Meghan Drake, Robert Cottingham, Ben Allen, and Miriam Land.</p>
 
 publications :
     -
@@ -109,3 +105,23 @@ publications :
     -
         display-text: |
             Witten IH, Frank E, Hall MA, Pal CJ. The WEKA Workbench. Online Appendix for "Data Mining, Fourth Edition: Practical Machine Learning Tools and Techniques". 4th ed. San Francisco, CA, USA: Morgan Kaufmann Publishers Inc.; 2016.
+
+    -
+        display-test: |
+            Weka documentation
+        link: http://www.cs.waikato.ac.nz/ml/weka/documentation.html
+
+    -
+        display-test: |
+            J48 specs
+        link: http://weka.sourceforge.net/doc.dev/weka/classifiers/trees/J48.html
+
+    -
+        display-test: |
+            Weka specs
+        link: http://www.cs.waikato.ac.nz/~remco/weka_bn/node13.html
+
+    -
+        display-test: |
+            Tutorial for Weka Decision Tree App
+        link: https://appdev.kbase.us/narrative/ws.5119.obj.1
